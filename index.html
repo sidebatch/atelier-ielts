@@ -810,6 +810,7 @@ function buildOutline(){
   const c1=$("b1Claim").value.trim(), w1=$("b1Why").value.trim();
   const c2=$("b2Claim").value.trim(), w2=$("b2Why").value.trim();
   const thesis = t.stanceLabel ? (t.thesis[state.stance]||"[내 입장 문장을 여기에 써]")
+                               : t.kind==="twopart" ? "This essay will discuss [첫 번째 질문에 대한 답] and [두 번째 질문에 대한 답]."
                                : "This problem is mainly caused by [원인 키워드] and requires [해결책 키워드].";
   const para=(title,body)=>`<div class="para"><h4>${title}</h4><textarea rows="3">${esc(body)}</textarea></div>`;
   $("outlineBody").innerHTML =
