@@ -799,6 +799,7 @@ function eqAnswer(i){
   btns.forEach(b=>b.disabled=true);
   btns[q.answer].classList.add("correct");
   if(i===q.answer) state.eq.score++; else btns[i].classList.add("wrong");
+  $("eqProg").textContent="문제 "+(state.eq.idx+1)+" / "+e.quiz.length+" · 맞춘 "+state.eq.score+"개";
   $("eqWhy").innerHTML=(i===q.answer?"⭕ 정답! ":"❌ 땡! ")+esc(q.why);
   $("eqWhy").style.display="";
   $("eqNext").textContent = state.eq.idx===e.quiz.length-1 ? "결과 보기 →" : "다음 문제 →";
