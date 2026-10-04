@@ -335,6 +335,7 @@
       </select>
       <button class="btn" id="btnAddResv">예약하기</button>
       <button class="btn ghost small" id="btnNotif">🔔 알림 켜기</button>
+      <p class="hint" id="resvMsg" style="display:none"></p>
       <div class="hint">💡 알림은 <b>앱이 열려 있을 때</b> 와. 앱이 꺼져 있으면 폰 알람을 함께 쓰는 게 확실해.</div>
     </div>
     <div class="card">
@@ -829,12 +830,13 @@ function renderResvList(){
 }
 function addResv(){
   const d=$("resvDate").value, t=$("resvTime").value, k=$("resvKind").value;
-  if(!d||!t){ alert("날짜와 시간을 골라줘."); return; }
+  const msg=$("resvMsg");
+  if(!d||!t){ msg.textContent="⚠️ 날짜와 시간을 먼저 골라줘."; msg.style.display=""; return; }
   DB.reservations=DB.reservations||[];
   DB.reservations.push({date:d, time:t, kind:k, notified:false});
   DB.reservations.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
   saveDB(DB); renderResvList();
-  alert("예약됐어! "+d+" "+t);
+  msg.textContent="✅ 예약됐어! "+d+" "+t; msg.style.display="";
 }
 function delResv(i){ DB.reservations.splice(i,1); saveDB(DB); renderResvList(); }
 function askNotif(){
@@ -899,7 +901,18 @@ function init(){
   $("dueLater").addEventListener("click", ()=>{ $("dueBanner").hidden=true; });
   renderHome(); drillHome();
   checkDue(); setInterval(checkDue, 30000);
-  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+  if("serviceWorker" in navigator){
+    const hadController=!!navigator.serviceWorker.controller;
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+    // 구 SW가 제어 중이던 페이지에서 새 SW가 활성화되면 자동 새로고침 (낡은 화면 방지)
+    if(hadController) navigator.serviceWorker.addEventListener("controllerchange", ()=>{
+      const b=document.createElement("div");
+      b.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;z-index:99;background:#171208;border:1px solid var(--gold);color:var(--text);border-radius:10px;padding:12px;text-align:center;font-size:14px";
+      b.textContent="🔄 새 버전이 나왔어. 바로 적용할게!";
+      document.body.appendChild(b);
+      setTimeout(()=>location.reload(), 1500);
+    }, {once:true});
+  }
 }
 init();
 </script>
