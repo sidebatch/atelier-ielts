@@ -654,60 +654,45 @@ const CRIT_INFO = {
 
 const DRILLS = {
 TR: [
- {q:"Some people think that the main benefit of international cooperation is in the protection of the environment, while others think that the main benefit is in the business world. Discuss both views and give your own opinion.\n이 문제의 요구사항으로 옳은 것은?",
-  choices:["환경 보호 주장만 펼친다","비즈니스 주장만 펼친다","양쪽 견해를 다루고 내 의견을 밝힌다","국제 협력의 역사만 설명한다"], answer:2,
-  why:"Discuss both views + give your own opinion → 양쪽 견해 + 내 의견이 정답."},
- {q:"In many countries, people are becoming increasingly overweight. What are the causes of this, and what measures could be taken to solve the problem?\n이 문제는 몇 개의 질문에 답해야 할까?",
-  choices:["1개","2개","3개","질문이 없다"], answer:1,
-  why:"원인 + 해결책 = 2개 질문. 하나만 쓰면 TR 감점."},
- {q:"Some experts believe that it is better for children to begin learning a foreign language at primary school rather than secondary school. Do the advantages of this outweigh the disadvantages?\n여기서 반드시 밝혀야 할 것은?",
-  choices:["외국어의 종류","내 판단(장점이 큰지, 단점이 큰지)","학교 시간표","전문가 이름"], answer:1,
-  why:"outweigh the disadvantages → 장단 비교 후 내 판단을 명확히 해야 함."}
+{q: "Some people believe that unpaid community service should be a compulsory part of high school programmes. To what extent do you agree or disagree?\n이 문제의 요구사항으로 옳은 것은?", choices: ["장점과 단점을 똑같이 다룬 뒤 결론에서 입장을 밝히지 않는다", "봉사활동의 종류를 가능한 많이 나열한다", "내 입장을 분명히 밝히고, 그 이유를 두 가지 이상 제시한다", "반대 의견만 골라서 반박한다"], answer: 2, why: "To what extent do you agree or disagree는 의견형이라 서론에서 입장을 분명히 밝혀야 해."},
+{q: "Some people think that the best way to reduce crime is to give longer prison sentences. Others, however, believe there are better alternative ways of reducing crime. Discuss both views and give your own opinion.\n이 문제의 요구사항으로 옳은 것은?", choices: ["형량 강화 주장만 펼친다", "양쪽 견해를 다루고 내 의견을 밝힌다", "내 의견 없이 양쪽 견해만 정리한다", "형량 강화에 대한 찬반 투표 결과를 쓴다"], answer: 1, why: "Discuss both views and give your own opinion은 양쪽 견해 + 내 의견, 세 요소가 다 필요해."},
+{q: "At the present time, the population of some countries includes a relatively large number of young adults, compared with the number of older people. Do the advantages of this situation outweigh the disadvantages?\n이 문제의 요구사항으로 옳은 것은?", choices: ["장점과 단점을 모두 다룬 뒤, 어느 쪽이 더 큰지 판단한다", "장점만 세 가지 이상 제시한다", "젊은 층이 많은 원인을 분석한다", "인구 통계를 표와 함께 제시한다"], answer: 0, why: "outweigh 문제는 장단점을 다룬 뒤 '어느 쪽이 더 큰가' 판단을 내려야 해."},
+{q: "In many countries, people are becoming increasingly overweight. What are the causes of this, and what measures could be taken to solve the problem?\n이 문제의 요구사항으로 옳은 것은?", choices: ["비만이 건강에 나쁜 이유를 설명한다", "원인만 깊이 있게 분석한다", "해결책만 여러 가지 제시한다", "원인과 해결책을 모두 다룬다"], answer: 3, why: "문제에 causes와 measures 두 질문이 있으니 둘 다 답해야 Task Response를 충족해."},
+{q: "Happiness is considered very important in life. Why is it difficult to define? What factors are important in achieving happiness?\n이 문제의 요구사항으로 옳은 것은?", choices: ["행복의 정의를 하나만 내려서 설명한다", "두 질문에 각각 답한다 (정의가 어려운 이유 + 행복의 요소)", "행복이 중요한 이유를 길게 쓴다", "첫 번째 질문에만 답한다"], answer: 1, why: "2질문형은 두 질문에 각각 한 문단씩, 분량을 균등하게 배분해야 해."},
+{q: "In some countries, many more people are choosing to live alone today than in the past. Is this a positive or negative development?\n이 문제의 요구사항으로 옳은 것은?", choices: ["혼자 사는 이유를 가능한 많이 나열한다", "긍정적 측면과 부정적 측면을 똑같이 다루고 입장을 밝히지 않는다", "긍정적/부정적 중 입장을 정하고, 그 근거를 제시한다", "혼자 사는 사람들의 인터뷰 내용을 소개한다"], answer: 2, why: "positive or negative development도 의견형이라 내 판단을 분명히 해야 해."},
+{q: "In many countries, people now wear western-style clothes such as suits and jeans rather than traditional clothing. Why is this the case, and is it a positive or negative development?\n이 문제의 요구사항으로 옳은 것은?", choices: ["이유와 평가(긍정/부정 판단)를 모두 다룬다", "서양 옷이 들어온 이유만 설명한다", "긍정적인지 부정적인지만 판단한다", "전통 의상의 종류를 소개한다"], answer: 0, why: "why와 is it positive or negative, 두 요구를 모두 충족해야 해."},
+{q: "Foreign visitors should pay more than local visitors for cultural and historical attractions. To what extent do you agree or disagree?\n이 문제의 요구사항으로 옳은 것은?", choices: ["외국인 관광객의 수를 통계로 제시한다", "찬성과 반대를 똑같이 다루고 입장을 유보한다", "입장 없이 문화재의 가치를 설명한다", "동의/비동의 입장을 분명히 하고 근거를 든다"], answer: 3, why: "agree or disagree 문제는 입장을 분명히 밝히지 않으면 Task Response에서 감점이야."}
 ],
 CC: [
- {q:"빈칸에 가장 자연스러운 연결어는?\n\"Regular exercise improves health. ______, it reduces stress and improves sleep quality.\"",
-  choices:["However","Furthermore","In contrast","Although"], answer:1,
-  why:"앞 내용을 이어받아 추가 → Furthermore."},
- {q:"\"Online learning is convenient. ______, it lacks face-to-face interaction, which some students need.\"",
-  choices:["Moreover","Therefore","However","For instance"], answer:2,
-  why:"앞뒤가 대조 → However."},
- {q:"\"Air pollution is worsening in big cities. ______, governments should invest more in public transport.\"",
-  choices:["In contrast","Consequently","For example","Nevertheless"], answer:1,
-  why:"원인 → 결과/주장 → Consequently."}
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nOnline learning offers great flexibility. _______, it lacks the face-to-face interaction that many students need.", choices: ["However", "Furthermore", "Consequently", "For instance"], answer: 0, why: "앞뒤가 대조 관계라 however가 자연스러워."},
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nVolunteering teaches young people responsibility. _______, it helps them develop practical skills valued by employers.", choices: ["However", "Furthermore", "In contrast", "Nevertheless"], answer: 1, why: "같은 방향의 내용을 추가하니까 furthermore가 맞아."},
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nMany factories were built near the river without proper regulation. _______, the water became heavily polluted.", choices: ["However", "For instance", "Consequently", "In contrast"], answer: 2, why: "원인→결과 관계라 consequently가 자연스러워."},
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nSeveral measures can reduce traffic congestion. _______, building more cycle lanes encourages people to leave their cars at home.", choices: ["Consequently", "Nevertheless", "For instance", "In contrast"], answer: 2, why: "일반 주장 뒤 구체적 예시가 오니까 for instance가 맞아."},
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nLonger prison sentences may deter some offenders. _______, they do little to address the root causes of crime.", choices: ["Furthermore", "Consequently", "For instance", "Nevertheless"], answer: 3, why: "앞 내용을 인정하면서 반전시키니까 nevertheless가 자연스러워."},
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nPublic transport in the capital is cheap and efficient. _______, services in rural areas are infrequent and expensive.", choices: ["Furthermore", "In contrast", "Consequently", "For example"], answer: 1, why: "두 대상(수도 vs 지방)을 대비시키니까 in contrast가 맞아."},
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nDeforestation has destroyed vast areas of natural habitat. _______, many species are now threatened with extinction.", choices: ["As a result", "However", "For instance", "In contrast"], answer: 0, why: "원인→결과 흐름이라 as a result가 자연스러워."},
+{q: "빈칸에 가장 자연스러운 연결어를 고르시오.\n\nStrict laws reduced smoking in public places. _______, higher taxes on tobacco discouraged young people from starting.", choices: ["However", "Similarly", "Consequently", "For instance"], answer: 1, why: "비슷한 성격의 두 사례를 나열하니까 similarly가 맞아."}
 ],
 LR: [
- {q:"다음 중 가장 자연스러운 바꿔쓰기는?\n원문: \"Crime rates are increasing in many cities.\"",
-  choices:["Crime numbers are going up in many cities.","In many urban areas, the incidence of crime is on the rise.","Many cities' crime rates are increased up.","Crime is more and more in cities."], answer:1,
-  why:"'the incidence of crime is on the rise' — 덜 흔한 표현 + 자연스러운 연어."},
- {q:"원문: \"Technology has changed the way people communicate.\"",
-  choices:["Technology has made communication different.","Technological advances have transformed interpersonal communication.","Technology changed people's communication way.","The way of communication got changed by technology."], answer:1,
-  why:"'transformed interpersonal communication' — 정확하고 격식 있는 바꿔쓰기."},
- {q:"원문: \"Governments should spend more money on education.\"",
-  choices:["Governments should put more money into education.","Greater public investment in education is needed.","Governments should spend money more on education.","Education needs governments to spend lots of money."], answer:1,
-  why:"'public investment in education' — 연어가 자연스러움."}
+{q: "\"Crime is a big problem in many cities.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Crime is a large problem in many cities.", "Crime poses a significant challenge in many urban areas.", "Crime makes a big trouble in many cities.", "Crime does a huge problem in many cities."], answer: 1, why: "pose a challenge와 urban areas가 자연스러운 고급 collocation이야. (make/do a problem은 어색해.)"},
+{q: "\"Technology has changed the way people communicate.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Technology has transformed how people interact.", "Technology has changed the road people communicate.", "Technology has turned the way people talk each other.", "Technology has exchanged the method people communicate."], answer: 0, why: "transform과 interact가 자연스러운 바꿔쓰기야. (road/exchange는 collocation 오류.)"},
+{q: "\"Many young people cannot find jobs.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Many young people cannot find works.", "Many young people cannot catch jobs.", "A large number of young people struggle to secure employment.", "Many young people cannot discover jobs."], answer: 2, why: "secure employment가 자연스러운 고급 표현이야. (work는 불가산, catch/discover a job은 어색해.)"},
+{q: "\"Governments should do something about pollution.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Governments should make something about pollution.", "Governments should take action to tackle pollution.", "Governments should do a thing to pollution.", "Governments should take a doing about pollution."], answer: 1, why: "take action to tackle이 자연스러운 collocation이야."},
+{q: "\"Education is very important for children\'s future.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Education is very essential for children\'s future.", "Education does very importance for children\'s future.", "Education is much important for children\'s future.", "Education plays a crucial role in children\'s future prospects."], answer: 3, why: "play a crucial role in이 자연스러운 고급 표현이야. (very essential, much important는 어색해.)"},
+{q: "\"People commit crimes because they are poor.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Poverty often drives people to commit crimes.", "People make crimes because they are poor.", "People do crimes because they are poor.", "Poorness often makes people to commit crimes."], answer: 0, why: "drive someone to do와 poverty가 자연스러워. (make/do crimes, poorness는 오류.)"},
+{q: "\"Tourism brings a lot of money to the country.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Tourism brings a lot of monies to the country.", "Tourism generates substantial revenue for the country.", "Tourism earns a lot of moneys to the country.", "Tourism does a lot of money for the country."], answer: 1, why: "generate revenue가 자연스러운 고급 collocation이야. (money는 불가산이라 monies/moneys는 오류.)"},
+{q: "\"Smoking is bad for your health.\" — 가장 자연스러운 바꿔쓰기는?", choices: ["Smoking is badly for your health.", "Smoking poses serious health risks.", "Smoking is harmfully for your health.", "Smoking does bad to your health."], answer: 1, why: "pose health risks가 자연스러운 고급 표현이야. (badly/harmfully는 형용사 자리에 부사를 쓴 오류.)"}
 ],
 GRA: [
- {q:"다음 중 가장 자연스러운 복문은?\n\"She studied hard. She passed the exam.\"",
-  choices:["She studied hard, she passed the exam.","Because she studied hard, she passed the exam.","She studied hard because she passed the exam.","Studying hard, the exam was passed by her."], answer:1,
-  why:"원인-결과 관계가 명확한 접속사 문장."},
- {q:"\"The book was interesting. I bought it yesterday.\"",
-  choices:["The book which I bought it yesterday was interesting.","The book I bought yesterday was interesting.","The book was interesting, I bought yesterday.","Bought yesterday, the book was interesting."], answer:1,
-  why:"관계대명사 목적격 생략 — 가장 자연스러움."},
- {q:"\"He was tired. He continued working.\"",
-  choices:["He was tired, he continued working.","Although he was tired, he continued working.","He was tired so he continued working.","Being tired, working was continued."], answer:1,
-  why:"양보 관계 → Although."}
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"The government built new cycle lanes. They encourage people to leave their cars at home.\"", choices: ["The government built new cycle lanes, which encourage people to leave their cars at home.", "The government built new cycle lanes, that encourage people to leave their cars at home.", "The government built new cycle lanes which encourages people to leave their cars at home.", "The government built new cycle lanes, they encourage people to leave their cars at home."], answer: 0, why: "비제한적 관계대명사 which + 동사 encourage의 수 일치가 정확해. (콤마 뒤 that, encourages, 콤마 스플라이스는 오류.)"},
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"Teenagers spend too much time on social media. This affects their sleep.\"", choices: ["Teenagers spend too much time on social media, that affects their sleep.", "Teenagers spend too much time on social media, which affects their sleep.", "Teenagers spend too much time on social media which affect their sleep.", "Teenagers spending too much time on social media, this affects their sleep."], answer: 1, why: "which가 앞 문장 전체를 받아주면서 수 일치도 맞아. (that/affect/분사 dangling은 오류.)"},
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"The factory closed down. Hundreds of workers lost their jobs.\"", choices: ["The factory closed down, hundreds of workers lost their jobs.", "The factory closed down because hundreds of workers lost their jobs.", "When the factory closed down, hundreds of workers lost their jobs.", "Closing down the factory, hundreds of workers lost their jobs."], answer: 2, why: "시간 접속사 when으로 자연스럽게 연결돼. (콤마 스플라이스, 인과 뒤바뀜, dangling 분사는 오류.)"},
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"Volunteering is unpaid. It teaches young people valuable skills.\"", choices: ["Despite volunteering is unpaid, it teaches young people valuable skills.", "Although volunteering is unpaid, it teaches young people valuable skills.", "Volunteering is unpaid, but it teaches young people valuable skills, however.", "Volunteering is unpaid, it teaches young people valuable skills."], answer: 1, why: "although + 절이 정확한 양보 구문이야. (despite 뒤엔 명사, but/however 중복, 콤마 스플라이스는 오류.)"},
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"The city invested in public transport. Traffic congestion decreased.\"", choices: ["The city invested in public transport, traffic congestion decreased.", "The city invested in public transport, so traffic congestion decreased, because of it.", "After the city invested in public transport, traffic congestion decreased.", "Invested in public transport, traffic congestion decreased."], answer: 2, why: "시간 접속사 after로 매끄럽게 연결돼. (콤마 스플라이스, 어색한 중복, dangling 분사는 오류.)"},
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"Some species are endangered. They need urgent protection.\"", choices: ["Some species, that are endangered, need urgent protection.", "Some species, which are endangered, need urgent protection.", "Some species which are endangered, they need urgent protection.", "Some species are endangered, needing urgent protection, they are."], answer: 1, why: "비제한 which 절이 자연스러워. (콤마+that, they 반복, 어색한 어순은 오류.)"},
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"Children learn a foreign language early. They pick it up more easily.\"", choices: ["Children, who learn a foreign language early, they pick it up more easily.", "Children learn a foreign language early, picking it up more easier.", "Children who learn a foreign language early pick it up more easily.", "Children learning a foreign language early, pick it up more easily."], answer: 2, why: "제한적 관계대명사 who로 한 문장으로 매끄럽게 합쳐져. (they 반복, more easier, 콤마 분리는 오류.)"},
+{q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"The internet provides vast information. People must learn to evaluate sources critically.\"", choices: ["The internet provides vast information, people must learn to evaluate sources critically.", "The internet provides vast information, however people must learn to evaluate sources critically.", "While the internet provides vast information, people must learn to evaluate sources critically.", "Providing vast information, people must learn to evaluate sources critically."], answer: 2, why: "양보 접속사 while로 자연스럽게 연결돼. (콤마 스플라이스 2개, dangling 분사는 오류.)"}
 ]};
-
-const CHECKS = [
- {c:"TR", t:"질문의 모든 부분에 답했나?", s:"질문이 2개면 2개 다 · 입장 요구면 입장까지"},
- {c:"TR", t:"내 입장이 서론부터 결론까지 일관되나?", s:"중간에 입장 바꾸지 않기"},
- {c:"CC", t:"각 문단이 중심 문장으로 시작하나?", s:"한 문단 = 한 아이디어"},
- {c:"CC", t:"연결어를 자연스럽게 썼나?", s:"같은 연결어 반복 없이, 남발 없이"},
- {c:"LR", t:"주제 핵심 단어를 바꿔 쓴 표현이 있나?", s:"paraphrase가 곧 LR 점수"},
- {c:"LR", t:"같은 단어를 3번 이상 반복하지 않았나?", s:"반복은 어휘 점수를 갉아먹음"},
- {c:"GRA", t:"복문을 다양하게 3개 이상 썼나?", s:"접속사·관계대명사·분사구문 등"},
- {c:"GRA", t:"다 쓰고 5분 검토했나?", s:"수일치·관사·철자 훑기"}
-];
 
 const $ = id => document.getElementById(id);
 const state = { topic:null, topicIdx:0, stance:null, timers:{}, writeStart:0, cur:"step-home", drill:null };
