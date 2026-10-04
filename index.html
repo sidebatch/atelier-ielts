@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Writing Atelier — IELTS Task 2 구조 트레이너 (시제품)</title>
+<style>
+  :root{
+    --bg:#14110d; --card:#1f1a14; --card2:#26201a;
+    --gold:#d4af37; --gold-dim:#8a7226;
+    --text:#f2ead9; --muted:#ab9f88; --line:#3b332a;
+    --green:#7fb069; --red:#c96a5a;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    line-height:1.6; padding-bottom:env(safe-area-inset-bottom);}
+  header{position:sticky; top:0; z-index:10; background:rgba(20,17,13,.96);
+    border-bottom:1px solid var(--line); padding:14px 18px; backdrop-filter:blur(6px);}
+  header .brand{font-family:Georgia,serif; font-size:20px; letter-spacing:.5px;}
+  header .brand b{color:var(--gold); font-weight:normal;}
+  header .sub{font-size:12px; color:var(--muted); margin-top:2px;}
+  main{max-width:640px; margin:0 auto; padding:18px 16px 60px;}
+  section[hidden]{display:none;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:14px;}
+  .badge{display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px;
+    border:1px solid var(--gold-dim); color:var(--gold); margin-bottom:8px; letter-spacing:.3px;}
+  h2{font-size:19px; margin:4px 0 10px; font-family:Georgia,serif; font-weight:normal;}
+  h3{font-size:15px; margin:0 0 8px; color:var(--gold);}
+  p{margin:8px 0;}
+  .en{font-family:Georgia,serif; font-size:16px; line-height:1.55;}
+  .kr{font-size:13.5px; color:var(--muted);}
+  .meta{font-size:12.5px; color:var(--muted);}
+  .btn{display:block; width:100%; border:none; border-radius:12px; padding:15px; font-size:16px; font-weight:700;
+    background:linear-gradient(180deg,#e3c04a,#c39a2b); color:#221a08; cursor:pointer; margin-top:12px;}
+  .btn:active{transform:scale(.99);}
+  .btn.ghost{background:transparent; border:1px solid var(--line); color:var(--text); font-weight:600;}
+  .btn.small{padding:10px; font-size:14px;}
+  .steps{display:flex; gap:6px; margin:2px 0 16px;}
+  .steps span{flex:1; text-align:center; font-size:11px; color:var(--muted); padding:7px 2px;
+    border-radius:8px; background:var(--card); border:1px solid var(--line);}
+  .steps span.on{color:#221a08; background:var(--gold); border-color:var(--gold); font-weight:700;}
+  .timer{position:sticky; top:64px; z-index:9; background:var(--card2); border:1px solid var(--line);
+    border-radius:12px; padding:10px 14px; margin-bottom:14px;}
+  .timer .t{font-size:22px; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:1px;}
+  .timer .t.urgent{color:var(--red);}
+  .bar{height:6px; background:#0d0b09; border-radius:4px; margin-top:8px; overflow:hidden;}
+  .bar i{display:block; height:100%; background:var(--gold); width:100%; transition:width 1s linear;}
+  textarea, input[type=text]{width:100%; background:#0f0d0a; border:1px solid var(--line); color:var(--text);
+    border-radius:10px; padding:12px; font-size:15px; font-family:inherit; line-height:1.6; resize:vertical;}
+  textarea:focus, input[type=text]:focus{outline:none; border-color:var(--gold-dim);}
+  label.f{display:block; font-size:13px; color:var(--muted); margin:14px 0 6px;}
+  .stance{display:flex; gap:8px; flex-wrap:wrap;}
+  .stance button{flex:1 1 30%; border:1px solid var(--line); background:#0f0d0a; color:var(--text);
+    border-radius:10px; padding:11px 6px; font-size:13.5px; cursor:pointer; min-width:100px;}
+  .stance button.sel{background:var(--gold); color:#221a08; border-color:var(--gold); font-weight:700;}
+  .para{border-left:3px solid var(--gold-dim); padding:2px 0 2px 12px; margin:14px 0;}
+  .para h4{margin:0 0 6px; font-size:14px; color:var(--gold);}
+  .sample{background:#171208; border:1px dashed var(--gold-dim); border-radius:12px; padding:14px; margin-top:12px; font-size:14px;}
+  .sample .en{font-size:14.5px;}
+  .wc{display:flex; align-items:baseline; gap:10px; margin:10px 0 4px;}
+  .wc b{font-size:26px; font-variant-numeric:tabular-nums;}
+  .wc.ok b{color:var(--gold);}
+  .stat{display:flex; justify-content:space-between; padding:10px 2px; border-bottom:1px solid var(--line); font-size:15px;}
+  .stat:last-child{border-bottom:none;}
+  .pill{display:inline-block; padding:4px 12px; border-radius:20px; font-size:13px; font-weight:700;}
+  .pill.ok{background:#1d2b1a; color:var(--green); border:1px solid var(--green);}
+  .pill.no{background:#2b1d1a; color:var(--red); border:1px solid var(--red);}
+  .hint{font-size:12.5px; color:var(--muted); background:#0f0d0a; border-radius:8px; padding:10px 12px; margin-top:10px;}
+  .topic-card{cursor:pointer;}
+  .topic-card:active{border-color:var(--gold-dim);}
+  .notice{background:#2b1d1a; border:1px solid var(--red); color:#f0b9ac; border-radius:10px;
+    padding:10px 12px; font-size:13.5px; margin-top:10px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><b>W</b>riting Atelier</div>
+  <div class="sub">IELTS Writing Task 2 · 구조 트레이너 (시제품 v0.1)</div>
+</header>
+<main>
+  <div class="steps" id="stepbar">
+    <span data-s="step-home">주제</span><span data-s="step-plan">플래닝</span><span data-s="step-outline">아웃라인</span><span data-s="step-write">실전</span>
+  </div>
+
+  <!-- 홈: 주제 선택 -->
+  <section id="step-home">
+    <div class="card">
+      <h2>실전처럼, 구조부터 잡자</h2>
+      <p class="kr">Task 2 고득점의 80%는 <b style="color:var(--gold)">쓰기 전 5분 플래닝</b>에서 결정돼. 이 트레이너는 아이디어→아웃라인→40분 실전까지 한 흐름으로 훈련시켜.</p>
+      <p class="meta">① 주제 고르기 → ② 5분 플래닝 → ③ 아웃라인 확정 → ④ 40분 실전 쓰기</p>
+    </div>
+    <div id="topicList"></div>
+  </section>
+
+  <!-- 주제 확인 -->
+  <section id="step-topic" hidden>
+    <div class="card">
+      <span class="badge" id="tType"></span>
+      <p class="en" id="tQuestion"></p>
+      <p class="kr" id="tQuestionKr"></p>
+      <p class="meta">▸ 최소 250단어 &nbsp;·&nbsp; ▸ 권장 시간 40분 &nbsp;·&nbsp; ▸ 플래닝 5분 포함</p>
+      <button class="btn" id="btnStartPlan">플래닝 시작 (5분)</button>
+      <button class="btn ghost small" onclick="go('step-home')">다른 주제 고르기</button>
+    </div>
+  </section>
+
+  <!-- 플래닝 -->
+  <section id="step-plan" hidden>
+    <div class="timer">
+      <div class="t" id="planClock">05:00</div>
+      <div class="bar"><i id="planBar"></i></div>
+      <div class="meta" style="margin-top:6px">플래닝이 끝나면 자동으로 넘어가지 않아. 여유 있게 마무리해.</div>
+    </div>
+    <div class="card">
+      <div id="stanceWrap" hidden>
+        <label class="f" id="stanceLabel" style="margin-top:0"></label>
+        <div class="stance" id="stanceBtns"></div>
+      </div>
+      <label class="f" id="b1Label"></label>
+      <input type="text" id="b1Claim" placeholder="핵심 주장 한 문장 (영어로)">
+      <textarea id="b1Why" rows="2" placeholder="근거 / 예시 (한국어로 메모해도 돼)" style="margin-top:8px"></textarea>
+      <label class="f" id="b2Label"></label>
+      <input type="text" id="b2Claim" placeholder="핵심 주장 한 문장 (영어로)">
+      <textarea id="b2Why" rows="2" placeholder="근거 / 예시 (한국어로 메모해도 돼)" style="margin-top:8px"></textarea>
+      <div class="hint">💡 팁: 주장 1개당 근거 1개면 충분해. 완벽한 문장 말고 <b>키워드</b>만 적어도 돼. 시험장에선 이 5분이 네 설계도야.</div>
+      <button class="btn" id="btnToOutline">아웃라인 만들기</button>
+    </div>
+  </section>
+
+  <!-- 아웃라인 -->
+  <section id="step-outline" hidden>
+    <div class="card">
+      <h2>내 아웃라인</h2>
+      <p class="kr">아래 4문단이 네 글의 뼈대야. 직접 고쳐 쓰면서 확정해.</p>
+      <div id="outlineBody"></div>
+      <button class="btn ghost small" id="btnSample">🏆 모범 아웃라인과 비교하기</button>
+      <div class="sample" id="sampleBox" hidden></div>
+      <button class="btn" id="btnStartWrite">실전 쓰기 시작 (40분)</button>
+    </div>
+  </section>
+
+  <!-- 실전 쓰기 -->
+  <section id="step-write" hidden>
+    <div class="timer">
+      <div class="t" id="writeClock">40:00</div>
+      <div class="bar"><i id="writeBar"></i></div>
+    </div>
+    <div class="card">
+      <button class="btn ghost small" id="btnPeek" style="margin-top:0">📋 아웃라인 펼쳐보기</button>
+      <div id="peekBox" hidden style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <div class="wc" id="wcWrap"><b id="wcNum">0</b><span class="meta">/ 목표 250단어</span></div>
+      <div class="bar"><i id="wcBar" style="width:0%"></i></div>
+      <textarea id="essay" rows="14" placeholder="여기에 에세이를 써. 서론부터 시작해." style="margin-top:12px"></textarea>
+      <button class="btn" id="btnFinish">작성 완료</button>
+    </div>
+  </section>
+
+  <!-- 완료 -->
+  <section id="step-done" hidden>
+    <div class="card">
+      <h2>훈련 완료 🎉</h2>
+      <div class="stat"><span>사용 시간</span><b id="dTime"></b></div>
+      <div class="stat"><span>단어 수</span><b id="dWords"></b></div>
+      <div class="stat"><span>250단어 달성</span><span id="dGoal"></span></div>
+      <div class="hint">💡 다음 훈련: 같은 주제로 <b>모범 아웃라인 표현 3개</b>를 외워서 다시 써봐. 두 번째가 훨씬 매끄러워질 거야.</div>
+      <button class="btn" onclick="go('step-home')">다른 주제로 훈련</button>
+      <button class="btn ghost small" id="btnRetry">이 주제로 다시 하기</button>
+    </div>
+  </section>
+</main>
+<script>
+const TOPICS = [
+  {
+    type: "의견형 · Opinion",
+    kind: "opinion",
+    q: "Some people believe that unpaid community service should be a compulsory part of high school programmes. To what extent do you agree or disagree?",
+    qkr: "무급 지역사회 봉사가 고등학교 과정의 의무 요소가 되어야 한다고 믿는 사람들이 있다. 이에 대해 얼마나 동의하는가?",
+    stanceLabel: "내 입장",
+    stances: ["완전 찬성","대체로 찬성","대체로 반대","완전 반대"],
+    thesis: {
+      "완전 찬성": "I completely agree that unpaid community service should be compulsory in high schools.",
+      "대체로 찬성": "I largely agree that unpaid community service should be a compulsory part of high school programmes.",
+      "대체로 반대": "I largely disagree with the idea of making unpaid community service compulsory in high schools.",
+      "완전 반대": "I completely disagree that unpaid community service should be compulsory in high schools."
+    },
+    b1: "본론 1 — 첫 번째 이유",
+    b2: "본론 2 — 두 번째 이유",
+    sample: {
+      intro: "There is a growing belief that high school students should be required to do unpaid work for their local community. I completely agree with this idea, as it benefits both teenagers and society as a whole.",
+      body1: "<b>Topic:</b> It teaches social responsibility. <b>Explain:</b> Volunteering at nursing homes or cleaning local parks gives students compassion and civic awareness no textbook can provide. <b>Example:</b> A student who helps elderly neighbours understands community needs first-hand.",
+      body2: "<b>Topic:</b> It builds practical skills. <b>Explain:</b> Organising charity events develops teamwork, communication and leadership. <b>Result:</b> These qualities impress universities and employers, improving future prospects.",
+      concl: "In conclusion, making community service compulsory would produce more responsible citizens and better-prepared graduates, so schools should adopt it."
+    }
+  },
+  {
+    type: "논의형 · Discussion",
+    kind: "discussion",
+    q: "Some people think that the best way to reduce crime is to give longer prison sentences. Others, however, believe there are better alternative ways of reducing crime. Discuss both views and give your own opinion.",
+    qkr: "범죄를 줄이는 가장 좋은 방법은 형량을 늘리는 것이라고 생각하는 사람들이 있다. 하지만 더 나은 대안이 있다고 믿는 사람들도 있다. 양쪽 견해를 논하고 자신의 의견을 제시하라.",
+    stanceLabel: "내 의견",
+    stances: ["형량 강화 쪽","대안 쪽","양쪽 균형"],
+    thesis: {
+      "형량 강화 쪽": "In my opinion, longer prison sentences are the most effective way to reduce crime.",
+      "대안 쪽": "In my opinion, alternative approaches are more effective than longer prison sentences.",
+      "양쪽 균형": "In my opinion, a combination of firm punishment and preventive measures is the most effective approach."
+    },
+    b1: "본론 1 — 첫 번째 견해 (형량 강화)",
+    b2: "본론 2 — 두 번째 견해 + 내 의견",
+    sample: {
+      intro: "Some argue that the most effective way to cut crime is to impose longer prison terms, while others favour alternative approaches. In my opinion, addressing root causes is more effective than simply extending sentences.",
+      body1: "<b>View 1:</b> Longer sentences deter crime. <b>Explain:</b> Harsh penalties send a clear message that crime does not pay, and they keep dangerous offenders off the streets. <b>Example:</b> Countries with strict sentencing for drug trafficking report lower reoffending in that category.",
+      body2: "<b>View 2 + my opinion:</b> Punishment alone does not prevent reoffending. <b>Explain:</b> Much crime stems from poverty and lack of education, so rehabilitation programmes and vocational training tackle the problem at its source — which is why I find this view more convincing.",
+      concl: "In conclusion, while longer sentences may offer short-term reassurance, lasting crime reduction comes from prevention and rehabilitation."
+    }
+  },
+  {
+    type: "문제-해결형 · Problem & Solution",
+    kind: "problem",
+    q: "Many animal species are becoming extinct due to human activities on land and in the sea. What are the causes of this trend, and what are the possible solutions?",
+    qkr: "육지와 바다에서의 인간 활동으로 인해 많은 동물 종이 멸종하고 있다. 이 추세의 원인은 무엇이며, 가능한 해결책은 무엇인가?",
+    stanceLabel: null,
+    stances: [],
+    thesis: {},
+    b1: "본론 1 — 원인 (2가지)",
+    b2: "본론 2 — 해결책 (2가지)",
+    sample: {
+      intro: "Human activity is driving a growing number of animal species towards extinction, both on land and in the oceans. This is mainly caused by habitat destruction and overexploitation, and it requires urgent protective measures.",
+      body1: "<b>Cause 1:</b> Habitat destruction — deforestation for farming and urban expansion leaves wildlife with nowhere to live. <b>Cause 2:</b> Overexploitation — overfishing and poaching directly reduce animal populations.",
+      body2: "<b>Solution 1:</b> Expand protected reserves and strictly enforce anti-poaching laws. <b>Solution 2:</b> Strengthen international cooperation, since many endangered species migrate across borders.",
+      concl: "In conclusion, unless habitats are preserved and exploitation is controlled, extinctions will accelerate — so coordinated action cannot be delayed."
+    }
+  }
+];
+
+const $ = id => document.getElementById(id);
+const state = { topic: null, stance: null, timers: {}, writeStart: 0 };
+
+function go(id){
+  Object.values(state.timers).forEach(clearInterval);
+  state.timers = {};
+  document.querySelectorAll("main > section").forEach(s => s.hidden = true);
+  $(id).hidden = false;
+  document.querySelectorAll("#stepbar span").forEach(sp =>
+    sp.classList.toggle("on", sp.dataset.s === id));
+  window.scrollTo({top:0});
+  if(id === "step-write"){
+    window.onbeforeunload = () => "작성 중인 글이 사라져. 정말 나갈까?";
+  } else {
+    window.onbeforeunload = null;
+  }
+}
+
+function fmt(sec){
+  const m = Math.floor(sec/60), s = sec%60;
+  return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+}
+
+function countdown(total, clockEl, barEl, onEnd){
+  let left = total;
+  const tick = () => {
+    $(clockEl).textContent = fmt(left);
+    $(barEl).style.width = (left/total*100) + "%";
+    $(clockEl).classList.toggle("urgent", left <= 60);
+    if(left <= 0){
+      clearInterval(state.timers[clockEl]);
+      if(onEnd) onEnd();
+    }
+    left--;
+  };
+  tick();
+  state.timers[clockEl] = setInterval(tick, 1000);
+  return () => total - left - 1; // elapsed seconds
+}
+
+// 홈 렌더링
+function renderHome(){
+  $("topicList").innerHTML = TOPICS.map((t,i) => `
+    <div class="card topic-card" onclick="pickTopic(${i})">
+      <span class="badge">${t.type}</span>
+      <p class="en" style="font-size:15px">${t.q}</p>
+      <p class="kr">${t.qkr}</p>
+      <button class="btn ghost small">이 주제로 훈련하기 →</button>
+    </div>`).join("");
+}
+
+function pickTopic(i){
+  state.topic = TOPICS[i];
+  state.stance = null;
+  $("tType").textContent = state.topic.type;
+  $("tQuestion").textContent = state.topic.q;
+  $("tQuestionKr").textContent = state.topic.qkr;
+  go("step-topic");
+}
+
+function startPlan(){
+  const t = state.topic;
+  // stance
+  if(t.stanceLabel){
+    $("stanceWrap").hidden = false;
+    $("stanceLabel").textContent = t.stanceLabel + "을 골라 (나중에 바꿔도 돼)";
+    $("stanceBtns").innerHTML = t.stances.map(s =>
+      `<button onclick="setStance('${s}', this)">${s}</button>`).join("");
+  } else {
+    $("stanceWrap").hidden = true;
+  }
+  $("b1Label").textContent = t.b1;
+  $("b2Label").textContent = t.b2;
+  ["b1Claim","b1Why","b2Claim","b2Why"].forEach(id => $(id).value = "");
+  go("step-plan");
+  countdown(300, "planClock", "planBar", () => {
+    const n = document.createElement("div");
+    n.className = "notice";
+    n.textContent = "⏰ 5분 종료! 마무리하고 아웃라인으로 넘어가.";
+    $("step-plan").querySelector(".card").appendChild(n);
+  });
+}
+
+function setStance(s, btn){
+  state.stance = s;
+  document.querySelectorAll("#stanceBtns button").forEach(b => b.classList.remove("sel"));
+  btn.classList.add("sel");
+}
+
+function esc(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function buildOutline(){
+  const t = state.topic;
+  const c1 = $("b1Claim").value.trim(), w1 = $("b1Why").value.trim();
+  const c2 = $("b2Claim").value.trim(), w2 = $("b2Why").value.trim();
+  let thesis = "";
+  if(t.stanceLabel){
+    thesis = t.thesis[state.stance] || "[내 입장 문장을 여기에 써]";
+  } else {
+    thesis = "This problem is mainly caused by [원인 키워드] and requires [해결책 키워드].";
+  }
+  const para = (title, body) => `
+    <div class="para"><h4>${title}</h4><textarea rows="3">${esc(body)}</textarea></div>`;
+  $("outlineBody").innerHTML =
+    para("① 서론 — 바꿔쓰기 + 입장", "It is often argued that [주제를 다르게 표현한 한 문장]. " + thesis) +
+    para("② 본론 1", (c1 ? "주장: " + c1 : "[주장 한 문장]") + "\n" + (w1 ? "근거/예시: " + w1 : "[근거 또는 예시]")) +
+    para("③ 본론 2", (c2 ? "주장: " + c2 : "[주장 한 문장]") + "\n" + (w2 ? "근거/예시: " + w2 : "[근거 또는 예시]")) +
+    para("④ 결론 — 입장 재확인", "In conclusion, [내 입장을 다른 말로 한 문장].");
+  $("sampleBox").hidden = true;
+  $("btnSample").textContent = "🏆 모범 아웃라인과 비교하기";
+  go("step-outline");
+}
+
+function toggleSample(){
+  const t = state.topic, box = $("sampleBox");
+  if(box.hidden){
+    box.innerHTML = `<h3>🏆 모범 아웃라인 (Band 9 수준)</h3>
+      <p><b>서론</b></p><p class="en">${t.sample.intro}</p>
+      <p><b>본론 1</b></p><p class="en">${t.sample.body1}</p>
+      <p><b>본론 2</b></p><p class="en">${t.sample.body2}</p>
+      <p><b>결론</b></p><p class="en">${t.sample.concl}</p>
+      <p class="kr">👀 포인트: 각 본론이 <b>주장→설명→예시</b> 3단 구조야. 네 아웃라인도 이 모양인지 대봐.</p>`;
+    box.hidden = false;
+    $("btnSample").textContent = "모범 아웃라인 닫기";
+  } else {
+    box.hidden = true;
+    $("btnSample").textContent = "🏆 모범 아웃라인과 비교하기";
+  }
+}
+
+function startWrite(){
+  $("essay").value = "";
+  updateWC();
+  // 아웃라인 엿보기 내용
+  const paras = $("outlineBody").querySelectorAll("textarea");
+  const titles = ["① 서론","② 본론 1","③ 본론 2","④ 결론"];
+  $("peekBox").innerHTML = paras.length
+    ? `<div class="hint" style="margin-top:0">${titles.map((h,i)=>`<b>${h}</b><br>${esc(paras[i].value).replace(/\n/g,"<br>")}`).join("<br><br>")}</div>`
+    : "";
+  $("peekBox").hidden = true;
+  $("btnPeek").textContent = "📋 아웃라인 펼쳐보기";
+  go("step-write");
+  state.writeStart = Date.now();
+  state.elapsed = countdown(2400, "writeClock", "writeBar", () => {
+    const n = document.createElement("div");
+    n.className = "notice";
+    n.textContent = "⏰ 40분 종료! 마무리하고 '작성 완료'를 눌러.";
+    $("step-write").appendChild(n);
+  });
+}
+
+function countWords(s){
+  return s.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function updateWC(){
+  const n = countWords($("essay").value);
+  $("wcNum").textContent = n;
+  $("wcBar").style.width = Math.min(100, n/250*100) + "%";
+  $("wcWrap").classList.toggle("ok", n >= 250);
+}
+
+function finish(){
+  const secs = Math.floor((Date.now() - state.writeStart)/1000);
+  const n = countWords($("essay").value);
+  $("dTime").textContent = fmt(secs) + " / 40:00";
+  $("dWords").textContent = n + "단어";
+  $("dGoal").innerHTML = n >= 250
+    ? '<span class="pill ok">달성 🎯</span>'
+    : '<span class="pill no">미달 (' + (250-n) + '단어 부족)</span>';
+  go("step-done");
+}
+
+// 이벤트 바인딩
+$("btnStartPlan").onclick = startPlan;
+$("btnToOutline").onclick = buildOutline;
+$("btnSample").onclick = toggleSample;
+$("btnStartWrite").onclick = startWrite;
+$("btnPeek").onclick = () => {
+  const b = $("peekBox");
+  b.hidden = !b.hidden;
+  $("btnPeek").textContent = b.hidden ? "📋 아웃라인 펼쳐보기" : "📋 아웃라인 접기";
+};
+$("essay").addEventListener("input", updateWC);
+$("btnFinish").onclick = finish;
+$("btnRetry").onclick = () => pickTopic(TOPICS.indexOf(state.topic));
+
+renderHome();
+</script>
+</body>
+</html>
