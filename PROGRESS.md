@@ -54,3 +54,5 @@
 - 2026-10-04 17:10: 드릴 32문항 병합·배포, 실주소 32문항 확인
 - 2026-10-04 17:20경: **v3 피벗 결정** — 사용자가 직접 작문 연습 제거, 수동적 학습자용으로 재설계 지시
 - 2026-10-04 17:3x: v3 배포 완료 (에세이 5개+주석+퀴즈, 드릴 32문항, 가이드, 예약, 기록, PWA 캐시 v3), 실주소 200 확인. 크론 30분 간격으로 변경
+- 2026-10-04 18:0x: 2차 회귀 QA 7개 항목 전 항목 PASS (6개 탭 렌더링, 드릴 TR 8문항 풀세트+해설+기록 반영, 에세이 5개×주석 5종 팝업+퀴즈 2/2, 가이드 4기준+5-30-5, 예약 배너 동작+삭제, 기록 카운터 갱신). 발견 버그 1건 수정: 드릴 '맞춘 N개' 카운터가 답안 선택 시 즉시 갱신되지 않던 문제(drillAnswer에서 drillProg 텍스트 갱신 추가) → 커밋 "v3: 드릴 '맞춘 N개' 카운터 즉시 갱신" push, 실주소 200 확인. 콘솔 에러 없음.
+- 2026-10-04 17:45경: **가이드 공식 디스크립터 대조 검증 완료** — index.html 가이드 탭의 밴드 6/7/8 × TR/CC/LR/GRA 요약+영문 인용구 전부 공식 IELTS Writing Task 2 public band descriptors와 일치 확인 (밴드 7 인용 4건: "presents a clear position throughout the response" / "presents a clear central topic within each paragraph" / "uses less common lexical items with some awareness of style and collocation" / "uses a variety of complex structures"+"produces frequent error-free sentences"; 4개 기준 균등 가중 25%씩도 일치). 수정 불필요. 검증 출처 3건 교차 확인: slideshare.net/slideshow/ieltstask2writingbanddescriptorspdf/260031632, pdfroom.com(밴드 9 레벨 가이드 내 디스크립터 재수록), scribd.com/document/225431250 최신 public version.
