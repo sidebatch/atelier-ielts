@@ -717,6 +717,7 @@ function drillAnswer(i){
   if(i===q.answer) d.correct++; else btns[i].classList.add("wrong");
   $("drillWhy").innerHTML=(i===q.answer?"⭕ 정답! ":"❌ 땡! ")+esc(q.why);
   $("drillWhy").style.display="";
+  $("drillProg").textContent=(d.idx+1)+" / "+d.qs.length+" · 맞춘 "+d.correct+"개";
   d.done++;
   $("drillNext").textContent = d.idx===d.qs.length-1 ? "결과 보기 →" : "다음 문제 →";
   $("drillNext").style.display="";
