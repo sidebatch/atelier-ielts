@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Writing Atelier — IELTS Task 2 구조 트레이너 (시제품)</title>
+<meta name="theme-color" content="#14110d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Writing Atelier — IELTS Task 2 구조 트레이너</title>
 <style>
   :root{
     --bg:#14110d; --card:#1f1a14; --card2:#26201a;
@@ -20,13 +23,21 @@
   header .brand{font-family:Georgia,serif; font-size:20px; letter-spacing:.5px;}
   header .brand b{color:var(--gold); font-weight:normal;}
   header .sub{font-size:12px; color:var(--muted); margin-top:2px;}
-  main{max-width:640px; margin:0 auto; padding:18px 16px 60px;}
+  main{max-width:640px; margin:0 auto; padding:14px 16px 80px;}
+  .tabs{position:sticky; top:65px; z-index:9; display:flex; gap:6px; margin-bottom:14px;
+    background:rgba(20,17,13,.96); padding:8px 0;}
+  .tabs button{flex:1; border:1px solid var(--line); background:var(--card); color:var(--muted);
+    border-radius:10px; padding:10px 2px; font-size:12.5px; cursor:pointer;}
+  .tabs button.on{background:var(--gold); color:#221a08; border-color:var(--gold); font-weight:700;}
+  .tabpage[hidden]{display:none;}
   section[hidden]{display:none;}
   .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:14px;}
   .badge{display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px;
     border:1px solid var(--gold-dim); color:var(--gold); margin-bottom:8px; letter-spacing:.3px;}
+  .badge.done{background:#1d2b1a; border-color:var(--green); color:var(--green);}
   h2{font-size:19px; margin:4px 0 10px; font-family:Georgia,serif; font-weight:normal;}
-  h3{font-size:15px; margin:0 0 8px; color:var(--gold);}
+  h3{font-size:15px; margin:18px 0 8px; color:var(--gold);}
+  h3:first-child{margin-top:0;}
   p{margin:8px 0;}
   .en{font-family:Georgia,serif; font-size:16px; line-height:1.55;}
   .kr{font-size:13.5px; color:var(--muted);}
@@ -40,15 +51,16 @@
   .steps span{flex:1; text-align:center; font-size:11px; color:var(--muted); padding:7px 2px;
     border-radius:8px; background:var(--card); border:1px solid var(--line);}
   .steps span.on{color:#221a08; background:var(--gold); border-color:var(--gold); font-weight:700;}
-  .timer{position:sticky; top:64px; z-index:9; background:var(--card2); border:1px solid var(--line);
+  .timer{position:sticky; top:118px; z-index:8; background:var(--card2); border:1px solid var(--line);
     border-radius:12px; padding:10px 14px; margin-bottom:14px;}
   .timer .t{font-size:22px; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:1px;}
   .timer .t.urgent{color:var(--red);}
   .bar{height:6px; background:#0d0b09; border-radius:4px; margin-top:8px; overflow:hidden;}
   .bar i{display:block; height:100%; background:var(--gold); width:100%; transition:width 1s linear;}
-  textarea, input[type=text]{width:100%; background:#0f0d0a; border:1px solid var(--line); color:var(--text);
-    border-radius:10px; padding:12px; font-size:15px; font-family:inherit; line-height:1.6; resize:vertical;}
-  textarea:focus, input[type=text]:focus{outline:none; border-color:var(--gold-dim);}
+  textarea, input[type=text], input[type=date], input[type=time], select{width:100%; background:#0f0d0a;
+    border:1px solid var(--line); color:var(--text); border-radius:10px; padding:12px; font-size:15px;
+    font-family:inherit; line-height:1.6; resize:vertical;}
+  textarea:focus, input:focus, select:focus{outline:none; border-color:var(--gold-dim);}
   label.f{display:block; font-size:13px; color:var(--muted); margin:14px 0 6px;}
   .stance{display:flex; gap:8px; flex-wrap:wrap;}
   .stance button{flex:1 1 30%; border:1px solid var(--line); background:#0f0d0a; color:var(--text);
@@ -71,109 +83,332 @@
   .topic-card:active{border-color:var(--gold-dim);}
   .notice{background:#2b1d1a; border:1px solid var(--red); color:#f0b9ac; border-radius:10px;
     padding:10px 12px; font-size:13.5px; margin-top:10px;}
+  table.link{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px;}
+  table.link th{text-align:left; color:var(--gold); font-weight:600; padding:8px; border-bottom:1px solid var(--line); width:74px;}
+  table.link td{padding:8px; border-bottom:1px solid var(--line); color:var(--text);}
+  table.link td.en{font-family:Georgia,serif;}
+  .check{display:flex; gap:10px; align-items:flex-start; padding:10px 2px; border-bottom:1px solid var(--line); cursor:pointer;}
+  .check:last-child{border-bottom:none;}
+  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--gold); flex-shrink:0;}
+  .check span{font-size:14px;}
+  .check span small{display:block; color:var(--muted); font-size:12px; margin-top:2px;}
+  .check span i{font-style:normal; color:var(--gold); font-size:11px; font-weight:700; margin-right:6px;}
+  .resv{display:flex; align-items:center; gap:10px; padding:12px 2px; border-bottom:1px solid var(--line);}
+  .resv:last-child{border-bottom:none;}
+  .resv .info{flex:1;}
+  .resv .info b{font-size:15px;}
+  .resv .info .meta{display:block;}
+  .resv button{border:1px solid var(--line); background:#0f0d0a; color:var(--text); border-radius:8px;
+    padding:8px 10px; font-size:12.5px; cursor:pointer;}
+  .resv button.go{background:var(--gold); color:#221a08; border-color:var(--gold); font-weight:700;}
+  #dueBanner{position:fixed; left:12px; right:12px; bottom:12px; z-index:50; background:var(--gold);
+    color:#221a08; border-radius:14px; padding:14px 16px; box-shadow:0 6px 24px rgba(0,0,0,.5);}
+  #dueBanner[hidden]{display:none;}
+  #dueBanner b{font-size:15px;}
+  #dueBanner .row{display:flex; gap:8px; margin-top:10px;}
+  #dueBanner button{flex:1; border:none; border-radius:10px; padding:11px; font-size:14px; font-weight:700; cursor:pointer;}
+  #dueBanner .start{background:#221a08; color:var(--gold);}
+  #dueBanner .later{background:rgba(0,0,0,.12); color:#221a08;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .grid2 .card{margin-bottom:0; text-align:center;}
+  .grid2 .num{font-size:26px; font-weight:800; color:var(--gold); font-variant-numeric:tabular-nums;}
+  .grid2 .lbl{font-size:12px; color:var(--muted);}
+  ol.tight, ul.tight{margin:8px 0; padding-left:20px; font-size:14px;}
+  ol.tight li, ul.tight li{margin:6px 0;}
+  .drill-card{cursor:pointer;}
+  .drill-card:active{border-color:var(--gold-dim);}
+  .choice{display:block; width:100%; text-align:left; border:1px solid var(--line); background:#0f0d0a;
+    color:var(--text); border-radius:10px; padding:13px; font-size:14.5px; margin-top:8px; cursor:pointer; line-height:1.5;}
+  .choice.correct{border-color:var(--green); background:#1d2b1a;}
+  .choice.wrong{border-color:var(--red); background:#2b1d1a;}
+  .choice:disabled{cursor:default; opacity:.95;}
+  .bandbig{font-size:44px; font-weight:800; color:var(--gold); font-variant-numeric:tabular-nums; text-align:center; margin:6px 0;}
+  .crit{margin:10px 0;}
+  .crit .row{display:flex; justify-content:space-between; font-size:14px; padding:6px 2px;}
+  .crit .row b{font-variant-numeric:tabular-nums;}
+  .crit .row.weak b{color:var(--red);}
 </style>
 </head>
 <body>
 <header>
   <div class="brand"><b>W</b>riting Atelier</div>
-  <div class="sub">IELTS Writing Task 2 · 구조 트레이너 (시제품 v0.1)</div>
+  <div class="sub">IELTS Writing Task 2 · 4개 평가기준 완전 정복</div>
 </header>
 <main>
-  <div class="steps" id="stepbar">
-    <span data-s="step-home">주제</span><span data-s="step-plan">플래닝</span><span data-s="step-outline">아웃라인</span><span data-s="step-write">실전</span>
+  <div class="tabs">
+    <button data-tab="tab-train" class="on">🏠 훈련</button>
+    <button data-tab="tab-drill">🎯 드릴</button>
+    <button data-tab="tab-guide">📖 가이드</button>
+    <button data-tab="tab-book">🗓 예약</button>
+    <button data-tab="tab-stats">📊 기록</button>
   </div>
 
-  <!-- 홈: 주제 선택 -->
-  <section id="step-home">
-    <div class="card">
-      <h2>실전처럼, 구조부터 잡자</h2>
-      <p class="kr">Task 2 고득점의 80%는 <b style="color:var(--gold)">쓰기 전 5분 플래닝</b>에서 결정돼. 이 트레이너는 아이디어→아웃라인→40분 실전까지 한 흐름으로 훈련시켜.</p>
-      <p class="meta">① 주제 고르기 → ② 5분 플래닝 → ③ 아웃라인 확정 → ④ 40분 실전 쓰기</p>
+  <!-- 훈련 탭 -->
+  <div class="tabpage" id="tab-train">
+    <div class="steps" id="stepbar">
+      <span data-s="step-home" class="on">주제</span><span data-s="step-plan">플래닝</span><span data-s="step-outline">아웃라인</span><span data-s="step-write">실전</span>
     </div>
-    <div id="topicList"></div>
-  </section>
 
-  <!-- 주제 확인 -->
-  <section id="step-topic" hidden>
-    <div class="card">
-      <span class="badge" id="tType"></span>
-      <p class="en" id="tQuestion"></p>
-      <p class="kr" id="tQuestionKr"></p>
-      <p class="meta">▸ 최소 250단어 &nbsp;·&nbsp; ▸ 권장 시간 40분 &nbsp;·&nbsp; ▸ 플래닝 5분 포함</p>
-      <button class="btn" id="btnStartPlan">플래닝 시작 (5분)</button>
-      <button class="btn ghost small" onclick="go('step-home')">다른 주제 고르기</button>
-    </div>
-  </section>
-
-  <!-- 플래닝 -->
-  <section id="step-plan" hidden>
-    <div class="timer">
-      <div class="t" id="planClock">05:00</div>
-      <div class="bar"><i id="planBar"></i></div>
-      <div class="meta" style="margin-top:6px">플래닝이 끝나면 자동으로 넘어가지 않아. 여유 있게 마무리해.</div>
-    </div>
-    <div class="card">
-      <div id="stanceWrap" hidden>
-        <label class="f" id="stanceLabel" style="margin-top:0"></label>
-        <div class="stance" id="stanceBtns"></div>
+    <section id="step-home">
+      <div class="card">
+        <h2>실전처럼, 구조부터 잡자</h2>
+        <p class="kr">Task 2는 <b style="color:var(--gold)">4개 기준 × 25%</b>로 채점돼. 40분 풀 훈련 후 자가진단으로 예상 밴드를 확인하고, 약한 기준은 🎯드릴 탭에서 찔러.</p>
+        <p class="meta">① 주제 고르기 → ② 5분 플래닝 → ③ 아웃라인 확정 → ④ 40분 실전 쓰기 → ⑤ 밴드 자가진단</p>
       </div>
-      <label class="f" id="b1Label"></label>
-      <input type="text" id="b1Claim" placeholder="핵심 주장 한 문장 (영어로)">
-      <textarea id="b1Why" rows="2" placeholder="근거 / 예시 (한국어로 메모해도 돼)" style="margin-top:8px"></textarea>
-      <label class="f" id="b2Label"></label>
-      <input type="text" id="b2Claim" placeholder="핵심 주장 한 문장 (영어로)">
-      <textarea id="b2Why" rows="2" placeholder="근거 / 예시 (한국어로 메모해도 돼)" style="margin-top:8px"></textarea>
-      <div class="hint">💡 팁: 주장 1개당 근거 1개면 충분해. 완벽한 문장 말고 <b>키워드</b>만 적어도 돼. 시험장에선 이 5분이 네 설계도야.</div>
-      <button class="btn" id="btnToOutline">아웃라인 만들기</button>
-    </div>
-  </section>
+      <div id="topicList"></div>
+    </section>
 
-  <!-- 아웃라인 -->
-  <section id="step-outline" hidden>
-    <div class="card">
-      <h2>내 아웃라인</h2>
-      <p class="kr">아래 4문단이 네 글의 뼈대야. 직접 고쳐 쓰면서 확정해.</p>
-      <div id="outlineBody"></div>
-      <button class="btn ghost small" id="btnSample">🏆 모범 아웃라인과 비교하기</button>
-      <div class="sample" id="sampleBox" hidden></div>
-      <button class="btn" id="btnStartWrite">실전 쓰기 시작 (40분)</button>
-    </div>
-  </section>
+    <section id="step-topic" hidden>
+      <div class="card">
+        <span class="badge" id="tType"></span>
+        <p class="en" id="tQuestion"></p>
+        <p class="kr" id="tQuestionKr"></p>
+        <p class="meta">▸ 최소 250단어 &nbsp;·&nbsp; ▸ 권장 시간 40분 &nbsp;·&nbsp; ▸ 플래닝 5분 포함</p>
+        <button class="btn" id="btnStartPlan">플래닝 시작 (5분)</button>
+        <button class="btn ghost small" onclick="go('step-home')">다른 주제 고르기</button>
+      </div>
+    </section>
 
-  <!-- 실전 쓰기 -->
-  <section id="step-write" hidden>
-    <div class="timer">
-      <div class="t" id="writeClock">40:00</div>
-      <div class="bar"><i id="writeBar"></i></div>
-    </div>
-    <div class="card">
-      <button class="btn ghost small" id="btnPeek" style="margin-top:0">📋 아웃라인 펼쳐보기</button>
-      <div id="peekBox" hidden style="margin-top:10px"></div>
-    </div>
-    <div class="card">
-      <div class="wc" id="wcWrap"><b id="wcNum">0</b><span class="meta">/ 목표 250단어</span></div>
-      <div class="bar"><i id="wcBar" style="width:0%"></i></div>
-      <textarea id="essay" rows="14" placeholder="여기에 에세이를 써. 서론부터 시작해." style="margin-top:12px"></textarea>
-      <button class="btn" id="btnFinish">작성 완료</button>
-    </div>
-  </section>
+    <section id="step-plan" hidden>
+      <div class="timer">
+        <div class="t" id="planClock">05:00</div>
+        <div class="bar"><i id="planBar"></i></div>
+        <div class="meta" style="margin-top:6px">플래닝이 끝나면 자동으로 넘어가지 않아. 여유 있게 마무리해.</div>
+      </div>
+      <div class="card">
+        <div id="stanceWrap" hidden>
+          <label class="f" id="stanceLabel" style="margin-top:0"></label>
+          <div class="stance" id="stanceBtns"></div>
+        </div>
+        <label class="f" id="b1Label"></label>
+        <input type="text" id="b1Claim" placeholder="핵심 주장 한 문장 (영어로)">
+        <textarea id="b1Why" rows="2" placeholder="근거 / 예시 (한국어로 메모해도 돼)" style="margin-top:8px"></textarea>
+        <label class="f" id="b2Label"></label>
+        <input type="text" id="b2Claim" placeholder="핵심 주장 한 문장 (영어로)">
+        <textarea id="b2Why" rows="2" placeholder="근거 / 예시 (한국어로 메모해도 돼)" style="margin-top:8px"></textarea>
+        <div class="hint">💡 팁: 주장 1개당 근거 1개면 충분해. 완벽한 문장 말고 <b>키워드</b>만 적어도 돼. 시험장에선 이 5분이 네 설계도야.</div>
+        <button class="btn" id="btnToOutline">아웃라인 만들기</button>
+      </div>
+    </section>
 
-  <!-- 완료 -->
-  <section id="step-done" hidden>
+    <section id="step-outline" hidden>
+      <div class="card">
+        <h2>내 아웃라인</h2>
+        <p class="kr">아래 4문단이 네 글의 뼈대야. 직접 고쳐 쓰면서 확정해.</p>
+        <div id="outlineBody"></div>
+        <button class="btn ghost small" id="btnSample">🏆 모범 아웃라인과 비교하기</button>
+        <div class="sample" id="sampleBox" hidden></div>
+        <button class="btn" id="btnStartWrite">실전 쓰기 시작 (40분)</button>
+      </div>
+    </section>
+
+    <section id="step-write" hidden>
+      <div class="timer">
+        <div class="t" id="writeClock">40:00</div>
+        <div class="bar"><i id="writeBar"></i></div>
+      </div>
+      <div class="card">
+        <button class="btn ghost small" id="btnPeek" style="margin-top:0">📋 아웃라인 펼쳐보기</button>
+        <div id="peekBox" hidden style="margin-top:10px"></div>
+      </div>
+      <div class="card">
+        <div class="wc" id="wcWrap"><b id="wcNum">0</b><span class="meta">/ 목표 250단어</span></div>
+        <div class="bar"><i id="wcBar" style="width:0%"></i></div>
+        <textarea id="essay" rows="14" placeholder="여기에 에세이를 써. 서론부터 시작해." style="margin-top:12px"></textarea>
+        <button class="btn" id="btnFinish">작성 완료</button>
+      </div>
+    </section>
+
+    <section id="step-done" hidden>
+      <div class="card">
+        <h2>훈련 완료 🎉</h2>
+        <div class="stat"><span>사용 시간</span><b id="dTime"></b></div>
+        <div class="stat"><span>단어 수</span><b id="dWords"></b></div>
+        <div class="stat"><span>250단어 달성</span><span id="dGoal"></span></div>
+      </div>
+      <div class="card">
+        <h2>밴드 자가진단</h2>
+        <p class="kr">공식 평가기준 4개로 네 글을 점검해봐. 솔직할수록 예상 밴드가 정확해져.</p>
+        <div id="checkList"></div>
+        <div id="bandResult" style="display:none">
+          <div class="bandbig" id="bandOverall"></div>
+          <p class="meta" style="text-align:center">예상 밴드 (자가진단 기반 추정치)</p>
+          <div class="crit" id="bandCrit"></div>
+          <div class="hint" id="bandAdvice"></div>
+        </div>
+        <button class="btn" id="btnBand">예상 밴드 확인하기</button>
+        <button class="btn ghost small" onclick="showTab('tab-train'); go('step-home')">다른 주제로 훈련</button>
+        <button class="btn ghost small" id="btnRetry">이 주제로 다시 하기</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 드릴 탭 -->
+  <div class="tabpage" id="tab-drill" hidden>
+    <section id="drill-home">
+      <div class="card">
+        <h2>🎯 약점 드릴</h2>
+        <p class="kr">40분 풀에세이를 매번 쓸 필요는 없어. <b style="color:var(--gold)">가장 약한 기준 하나만</b> 5분씩 찌르는 게 제일 빨라. 기록 탭에서 네 약점을 확인하고 골라.</p>
+      </div>
+      <div id="drillCards"></div>
+    </section>
+    <section id="drill-play" hidden>
+      <div class="card">
+        <span class="badge" id="drillCrit"></span>
+        <p class="meta" id="drillProg"></p>
+        <p class="en" id="drillQ" style="font-size:15px; white-space:pre-line"></p>
+        <div id="drillChoices"></div>
+        <div class="hint" id="drillWhy" style="display:none"></div>
+        <button class="btn" id="drillNext" style="display:none">다음 문제 →</button>
+        <button class="btn ghost small" onclick="drillQuit()">그만하기</button>
+      </div>
+    </section>
+    <section id="drill-done" hidden>
+      <div class="card" style="text-align:center">
+        <h2>드릴 완료 🎯</h2>
+        <div class="bandbig" id="drillScore"></div>
+        <p class="kr" id="drillMsg"></p>
+        <button class="btn" id="drillRetry">다시 풀기</button>
+        <button class="btn ghost small" onclick="showTab('tab-drill'); drillHome()">다른 드릴 고르기</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 가이드 탭 -->
+  <div class="tabpage" id="tab-guide" hidden>
     <div class="card">
-      <h2>훈련 완료 🎉</h2>
-      <div class="stat"><span>사용 시간</span><b id="dTime"></b></div>
-      <div class="stat"><span>단어 수</span><b id="dWords"></b></div>
-      <div class="stat"><span>250단어 달성</span><span id="dGoal"></span></div>
-      <div class="hint">💡 다음 훈련: 같은 주제로 <b>모범 아웃라인 표현 3개</b>를 외워서 다시 써봐. 두 번째가 훨씬 매끄러워질 거야.</div>
-      <button class="btn" onclick="go('step-home')">다른 주제로 훈련</button>
-      <button class="btn ghost small" id="btnRetry">이 주제로 다시 하기</button>
+      <h2>📖 공식 평가기준 가이드</h2>
+      <p class="kr">IELTS Writing Task 2 공개 밴드 디스크립터 기준. 4개 기준 각 25%. 목표는 <b style="color:var(--gold)">밴드 7</b>의 문장을 전부 만족하는 것.</p>
     </div>
-  </section>
+    <div class="card">
+      <h3>1️⃣ Task Response — 과제에 답했는가 (25%)</h3>
+      <ul class="tight">
+        <li><b>Band 8:</b> 문제의 모든 부분을 충분히 다룸. 잘 전개된 입장 + 뒷받침된 아이디어</li>
+        <li><b>Band 7:</b> 모든 부분에 답함. <span class="en" style="font-size:13px">"presents a clear position throughout"</span> — 서론부터 결론까지 입장 일관</li>
+        <li><b>Band 6:</b> 전부 답은 하지만 일부는 대충. 입장이나 결론이 불명확할 수 있음</li>
+      </ul>
+      <p class="kr">⚠️ 가장 흔한 감점: 질문이 2개인데 1개만 답함. 쓰기 전에 질문 개수를 꼭 세.</p>
+    </div>
+    <div class="card">
+      <h3>2️⃣ Coherence &amp; Cohesion — 글이 매끄러운가 (25%)</h3>
+      <ul class="tight">
+        <li><b>Band 8:</b> 논리적 배열. 연결이 자연스러움. 문단 구분 적절</li>
+        <li><b>Band 7:</b> <span class="en" style="font-size:13px">"presents a clear central topic within each paragraph"</span> — 한 문단 = 한 아이디어. 연결어는 적절히 (과다/과소 사용 주의)</li>
+        <li><b>Band 6:</b> 전체 흐름은 있으나 연결이 어색하거나 기계적</li>
+      </ul>
+      <p class="kr">⚠️ However, Moreover 남발은 오히려 감점. 문단 공식 <b>T-E-E</b>: 중심문장 → 설명 → 예시.</p>
+    </div>
+    <div class="card">
+      <h3>3️⃣ Lexical Resource — 어휘가 되는가 (25%)</h3>
+      <ul class="tight">
+        <li><b>Band 8:</b> 폭넓은 어휘를 유연하게. 덜 흔한 표현을 구사, 단어 선택·연어 가끔 틀림</li>
+        <li><b>Band 7:</b> <span class="en" style="font-size:13px">"uses less common lexical items with some awareness of collocation"</span> — 어려운 단어가 아니라 <b>자연스러운 짝꿍(collocation)</b>이 점수</li>
+        <li><b>Band 6:</b> 어휘 범위 적절. 덜 흔한 표현 시도하나 어색함 잦음</li>
+      </ul>
+      <p class="kr">⚠️ 예: <s>make a crime</s> → <b>commit a crime</b>. 바꿔쓰기(paraphrase) 훈련이 곧 LR 훈련.</p>
+    </div>
+    <div class="card">
+      <h3>4️⃣ Grammatical Range &amp; Accuracy — 문장이 되는가 (25%)</h3>
+      <ul class="tight">
+        <li><b>Band 8:</b> 폭넓은 구조. 대부분 문장이 오류 없음</li>
+        <li><b>Band 7:</b> <span class="en" style="font-size:13px">"uses a variety of complex structures" + "frequent error-free sentences"</span> — 복문을 <b>다양하게</b>, 그리고 <b>틀리지 않게</b></li>
+        <li><b>Band 6:</b> 단문+복문 섞어 씀. 오류가 있어도 의사소통엔 지장 없음</li>
+      </ul>
+      <p class="kr">⚠️ 어려운 문장을 틀리게 쓰느니 쉬운 문장을 맞게. 검토 5분이 GRA를 지킨다.</p>
+    </div>
+    <div class="card">
+      <h3>⏱ 시간 배분: 5 — 30 — 5</h3>
+      <ul class="tight">
+        <li><b>5분 플래닝:</b> 질문 분해 + 입장 + 본론 2개 키워드 (이 앱 훈련 탭 그대로)</li>
+        <li><b>30분 쓰기:</b> 서론 5분 / 본론 각 10분 / 결론 5분</li>
+        <li><b>5분 검토:</b> 단어 수 → 주어-동사 수일치 → 관사 → 철자 순으로 훑기</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📝 서론 공식: 바꿔쓰기 + 입장</h3>
+      <p class="kr">바꿔쓰기 4법:</p>
+      <ol class="tight">
+        <li><b>동의어:</b> increase → rise, grow</li>
+        <li><b>품사 바꾸기:</b> the development of technology → technological development</li>
+        <li><b>능동↔수동:</b> people use phones → phones are used by people</li>
+        <li><b>문장 구조:</b> A causes B → B is caused by A / B results from A</li>
+      </ol>
+      <p class="kr">예: "Some people think museums should be free" → <span class="en" style="font-size:13px">"There is a view that admission to museums should be free of charge."</span></p>
+    </div>
+    <div class="card">
+      <h3>🔗 링킹워드 표</h3>
+      <table class="link">
+        <tr><th>추가</th><td class="en">furthermore, moreover, in addition, besides</td></tr>
+        <tr><th>대조</th><td class="en">however, nevertheless, in contrast, on the other hand</td></tr>
+        <tr><th>원인</th><td class="en">because of, due to, as a result of, stem from</td></tr>
+        <tr><th>결과</th><td class="en">therefore, consequently, as a result, lead to</td></tr>
+        <tr><th>예시</th><td class="en">for example, for instance, such as, namely</td></tr>
+        <tr><th>결론</th><td class="en">in conclusion, to sum up</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>🚫 실수 TOP 5</h3>
+      <ol class="tight">
+        <li>질문 2개 중 1개만 답함 (TR 직격)</li>
+        <li>한 문단에 아이디어 2개 쑤셔넣기 (CC 직격)</li>
+        <li>However/Moreover 기계적 반복 (CC 감점)</li>
+        <li>250단어 미달 (TR 감점)</li>
+        <li>외운 문장 통째로 박기 (어색하면 전부 감점)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 예약 탭 -->
+  <div class="tabpage" id="tab-book" hidden>
+    <div class="card">
+      <h2>🗓 훈련 예약</h2>
+      <p class="kr">미리 시간을 정해두면 실천율이 올라가. 예약 시간이 되면 앱이 알려줘.</p>
+      <label class="f">날짜</label>
+      <input type="date" id="resvDate">
+      <label class="f">시간</label>
+      <input type="time" id="resvTime">
+      <label class="f">주제</label>
+      <select id="resvTopic"></select>
+      <button class="btn" id="btnAddResv">예약하기</button>
+      <button class="btn ghost small" id="btnNotif">🔔 알림 켜기</button>
+      <div class="hint">💡 알림은 <b>앱이 열려 있을 때</b> 와. 앱이 꺼져 있으면 폰 알람을 함께 쓰는 게 확실해.</div>
+    </div>
+    <div class="card">
+      <h3>예약 목록</h3>
+      <div id="resvList"><p class="meta">예약이 없어. 위에서 잡아봐.</p></div>
+    </div>
+  </div>
+
+  <!-- 기록 탭 -->
+  <div class="tabpage" id="tab-stats" hidden>
+    <div class="grid2" style="margin-bottom:14px">
+      <div class="card"><div class="num" id="statSessions">0</div><div class="lbl">총 훈련</div></div>
+      <div class="card"><div class="num" id="statStreak">0</div><div class="lbl">연속 일수</div></div>
+      <div class="card"><div class="num" id="statWords">0</div><div class="lbl">평균 단어</div></div>
+      <div class="card"><div class="num" id="statGoal">0%</div><div class="lbl">250단어 달성률</div></div>
+    </div>
+    <div class="card">
+      <h3>📊 기준별 평균 밴드 (자가진단 누적)</h3>
+      <div class="crit" id="statBands"><p class="meta">아직 자가진단 기록이 없어. 훈련 후 밴드 확인을 해봐.</p></div>
+      <div class="hint" id="statWeak" style="display:none"></div>
+    </div>
+    <div class="card">
+      <h3>최근 훈련</h3>
+      <div id="sessList"><p class="meta">아직 훈련 기록이 없어.</p></div>
+    </div>
+  </div>
+
+  <div id="dueBanner" hidden>
+    <b id="dueTitle">⏰ 예약한 훈련 시간이야!</b>
+    <div class="row">
+      <button class="start" id="dueStart">지금 시작하기</button>
+      <button class="later" id="dueLater">나중에</button>
+    </div>
+  </div>
 </main>
 <script>
 const TOPICS = [
-  {
+{
     type: "의견형 · Opinion",
     kind: "opinion",
     q: "Some people believe that unpaid community service should be a compulsory part of high school programmes. To what extent do you agree or disagree?",
@@ -232,199 +467,596 @@ const TOPICS = [
       body2: "<b>Solution 1:</b> Expand protected reserves and strictly enforce anti-poaching laws. <b>Solution 2:</b> Strengthen international cooperation, since many endangered species migrate across borders.",
       concl: "In conclusion, unless habitats are preserved and exploitation is controlled, extinctions will accelerate — so coordinated action cannot be delayed."
     }
+  },
+{
+    type: "의견형 · Opinion",
+    kind: "opinion",
+    q: "In some countries, many more people are choosing to live alone today than in the past. Is this a positive or negative development?",
+    qkr: "일부 국가에서는 과거보다 오늘날 혼자 사는 것을 선택하는 사람이 훨씬 많아졌다. 이것은 긍정적인 발전인가, 부정적인 발전인가?",
+    stanceLabel: "내 입장",
+    stances: ["긍정적","부정적"],
+    thesis: {
+      "긍정적": "I believe this is a positive development, as it reflects greater personal freedom and economic independence.",
+      "부정적": "I believe this is a negative development, as it weakens social bonds and increases loneliness."
+    },
+    b1: "본론 1 — 첫 번째 이유",
+    b2: "본론 2 — 두 번째 이유",
+    sample: {
+      intro: "In several countries, the number of people living alone has risen sharply compared with the past. I consider this a positive development because it reflects both economic progress and greater personal freedom.",
+      body1: "<b>Topic:</b> Living alone builds independence. <b>Explain:</b> When people manage a household by themselves, they learn to cook, budget and solve everyday problems without relying on others. <b>Example:</b> A young professional living alone, for instance, quickly develops time-management skills that also benefit their career.",
+      body2: "<b>Topic:</b> It reflects rising prosperity. <b>Explain:</b> Only when incomes are high enough can most people afford their own home, so the trend signals economic success rather than social failure. <b>Result:</b> Far from being a problem, solo living is a sign that a society can support individual choice.",
+      concl: "In conclusion, the rise of solo living should be welcomed as evidence of freedom and prosperity, not feared as a social crisis."
+    }
+  },
+  {
+    type: "의견형 · Opinion",
+    kind: "opinion",
+    q: "Foreign visitors should pay more than local visitors for cultural and historical attractions. To what extent do you agree or disagree?",
+    qkr: "외국인 관광객은 문화·역사 명소에 대해 내국인보다 더 많은 요금을 내야 한다. 이에 대해 얼마나 동의하는가?",
+    stanceLabel: "내 입장",
+    stances: ["완전 찬성","대체로 찬성","대체로 반대","완전 반대"],
+    thesis: {
+      "완전 찬성": "I completely agree that foreign visitors should pay higher entrance fees than local visitors.",
+      "대체로 찬성": "I largely agree that foreign tourists should be charged more than local visitors at cultural and historical attractions.",
+      "대체로 반대": "I largely disagree with charging foreign visitors higher fees than local visitors.",
+      "완전 반대": "I completely disagree that foreign visitors should pay more than local visitors for cultural and historical attractions."
+    },
+    b1: "본론 1 — 첫 번째 이유",
+    b2: "본론 2 — 두 번째 이유",
+    sample: {
+      intro: "There is a view that tourists from abroad should be charged higher admission fees than local residents at cultural and historical sites. I completely agree with this policy, as it is both fair and financially necessary.",
+      body1: "<b>Topic:</b> It is fair because locals already fund these sites. <b>Explain:</b> Residents pay taxes that maintain museums and monuments year after year, while tourists contribute nothing to their upkeep. <b>Example:</b> A landmark like the Louvre, for instance, depends heavily on French public funding, so asking visitors to pay a premium simply balances the contribution.",
+      body2: "<b>Topic:</b> The extra income protects heritage. <b>Explain:</b> Tourist revenue can be reinvested directly into restoration and conservation work. <b>Result:</b> Without this funding, many historic sites would deteriorate or be forced to close.",
+      concl: "In conclusion, differential pricing is a just and practical way to preserve cultural heritage, so it should be widely adopted."
+    }
+  },
+  {
+    type: "논의형 · Discussion",
+    kind: "discussion",
+    q: "Some people think that parents should teach children how to be good members of society. Others, however, believe that school is the place to learn this. Discuss both views and give your own opinion.",
+    qkr: "자녀가 사회의 좋은 구성원이 되는 법은 부모가 가르쳐야 한다고 생각하는 사람들이 있다. 하지만 학교가 그 역할을 해야 한다고 믿는 사람들도 있다. 양쪽 견해를 논하고 자신의 의견을 제시하라.",
+    stanceLabel: "내 의견",
+    stances: ["부모 쪽","학교 쪽","양쪽 균형"],
+    thesis: {
+      "부모 쪽": "In my opinion, parents carry the primary responsibility for teaching children how to be good members of society.",
+      "학교 쪽": "In my opinion, schools are better placed than parents to teach children how to be good members of society.",
+      "양쪽 균형": "In my opinion, parents and schools share this responsibility and must work together."
+    },
+    b1: "본론 1 — 첫 번째 견해 (부모)",
+    b2: "본론 2 — 두 번째 견해 + 내 의견",
+    sample: {
+      intro: "Some believe that teaching children to become responsible citizens is the duty of parents, while others argue that schools should take on this role. In my view, both share the responsibility, but parents must lead.",
+      body1: "<b>View 1:</b> Parents shape values first. <b>Explain:</b> Children spend their formative years at home, absorbing manners, honesty and respect by copying their parents\' daily behaviour. <b>Example:</b> A child who sees parents helping neighbours naturally learns generosity.",
+      body2: "<b>View 2 + my opinion:</b> Schools reinforce social skills. <b>Explain:</b> Classrooms teach cooperation, rule-following and respect for diversity through group work and shared routines — yet these lessons only stick when parents model the same values at home, which is why I believe parents remain the decisive influence.",
+      concl: "In conclusion, while schools play a valuable supporting role, the foundation of good citizenship is laid by parents."
+    }
+  },
+  {
+    type: "논의형 · Discussion",
+    kind: "discussion",
+    q: "Some people say that the main environmental problem of our time is the loss of particular species of plants and animals. Others say that there are more important environmental problems. Discuss both views and give your own opinion.",
+    qkr: "우리 시대의 주요 환경 문제는 동식물 특정 종의 멸종이라고 말하는 사람들이 있다. 하지만 더 중요한 환경 문제가 있다고 말하는 사람들도 있다. 양쪽 견해를 논하고 자신의 의견을 제시하라.",
+    stanceLabel: "내 의견",
+    stances: ["종 멸종 쪽","다른 문제 쪽","양쪽 균형"],
+    thesis: {
+      "종 멸종 쪽": "In my opinion, the loss of plant and animal species is indeed the most serious environmental problem of our time.",
+      "다른 문제 쪽": "In my opinion, other environmental problems, such as climate change and pollution, are more urgent than the loss of species.",
+      "양쪽 균형": "In my opinion, species loss and problems like climate change are equally serious and deeply connected."
+    },
+    b1: "본론 1 — 첫 번째 견해 (종 멸종)",
+    b2: "본론 2 — 두 번째 견해 + 내 의견",
+    sample: {
+      intro: "Some argue that the extinction of plant and animal species is the defining environmental crisis of our era, while others point to problems such as climate change and pollution as more pressing. I believe climate change is the greater threat, since it drives species loss itself.",
+      body1: "<b>View 1:</b> Species loss is irreversible. <b>Explain:</b> Once a species disappears, it is gone forever, along with its role in the ecosystem — pollinators, for example, sustain the crops humanity depends on. <b>Example:</b> The decline of bee populations has already raised alarms among farmers worldwide.",
+      body2: "<b>View 2 + my opinion:</b> Climate change is the root cause. <b>Explain:</b> Rising temperatures, extreme weather and ocean acidification destroy habitats on a scale no conservation programme can offset — and because warming accelerates extinctions, tackling emissions must come first, which is why I find this view more convincing.",
+      concl: "In conclusion, while protecting species matters greatly, the most effective strategy is to confront climate change, the force behind their decline."
+    }
+  },
+  {
+    type: "장단점형 · Advantages & Disadvantages",
+    kind: "advdis",
+    q: "At the present time, the population of some countries includes a relatively large number of young adults, compared with the number of older people. Do the advantages of this situation outweigh the disadvantages?",
+    qkr: "현재 일부 국가의 인구는 고령자에 비해 청년층의 비율이 상대적으로 크다. 이러한 상황의 장점이 단점보다 큰가?",
+    stanceLabel: "내 판단",
+    stances: ["장점이 크다","단점이 크다"],
+    thesis: {
+      "장점이 크다": "I believe the advantages of a young population clearly outweigh the disadvantages.",
+      "단점이 크다": "I believe the disadvantages of having a relatively young population outweigh the advantages."
+    },
+    b1: "본론 1 — 장점",
+    b2: "본론 2 — 단점",
+    sample: {
+      intro: "Some countries today have a population dominated by young adults rather than older people. I believe the benefits of this demographic structure outweigh its drawbacks.",
+      body1: "<b>Topic:</b> A young workforce drives economic growth. <b>Explain:</b> Young adults are typically more adaptable, willing to learn new technologies and open to entrepreneurship. <b>Example:</b> Countries with youthful populations, such as India, have seen their tech sectors expand rapidly on the back of young talent.",
+      body2: "<b>Topic:</b> The main drawback is pressure on jobs and services. <b>Explain:</b> A large youth cohort needs far more schools, universities and entry-level jobs than the economy may provide. <b>Result:</b> If opportunities fall short, youth unemployment and frustration can rise — yet with sound policy, this challenge is manageable.",
+      concl: "In conclusion, although a young population strains public resources, its energy and economic potential make it an advantage on balance."
+    }
+  },
+  {
+    type: "장단점형 · Advantages & Disadvantages",
+    kind: "advdis",
+    q: "Some experts believe that it is better for children to begin learning a foreign language at primary school rather than secondary school. Do the advantages of this outweigh the disadvantages?",
+    qkr: "어떤 전문가들은 외국어 학습을 중등학교가 아닌 초등학교에서 시작하는 것이 더 낫다고 믿는다. 이러한 장점이 단점보다 큰가?",
+    stanceLabel: "내 판단",
+    stances: ["장점이 크다","단점이 크다"],
+    thesis: {
+      "장점이 크다": "I believe the advantages of starting foreign language learning in primary school outweigh the disadvantages.",
+      "단점이 크다": "I believe the disadvantages of introducing foreign languages at primary school outweigh the advantages."
+    },
+    b1: "본론 1 — 장점",
+    b2: "본론 2 — 단점",
+    sample: {
+      intro: "Some experts argue that children should begin learning a foreign language in primary rather than secondary school. I agree that the advantages of an early start outweigh the disadvantages.",
+      body1: "<b>Topic:</b> Young children acquire languages more naturally. <b>Explain:</b> Before puberty, the brain absorbs pronunciation and grammar intuitively, much like a first language. <b>Example:</b> A seven-year-old, for instance, can develop a near-native accent through songs and games, while teenagers must study rules consciously.",
+      body2: "<b>Topic:</b> The drawback is curriculum overload. <b>Explain:</b> Primary pupils already juggle literacy, numeracy and other subjects, so an extra language could cause stress. <b>Result:</b> However, when taught through play rather than exams, the burden stays light — so this concern need not outweigh the benefits.",
+      concl: "In conclusion, early language learning gives children a lasting head start that justifies the modest extra demands on the curriculum."
+    }
+  },
+  {
+    type: "문제-해결형 · Problem & Solution",
+    kind: "problem",
+    q: "Levels of youth crime are increasing rapidly in most cities around the world. What are the reasons for this, and suggest some solutions.",
+    qkr: "전 세계 대부분의 도시에서 청소년 범죄율이 빠르게 증가하고 있다. 그 이유는 무엇이며, 어떤 해결책을 제안할 수 있는가?",
+    stanceLabel: null,
+    stances: [],
+    thesis: {},
+    b1: "본론 1 — 원인",
+    b2: "본론 2 — 해결책",
+    sample: {
+      intro: "Youth crime is rising sharply in cities across the globe. This trend is driven mainly by family breakdown and negative peer influence, and it calls for stronger community and educational responses.",
+      body1: "<b>Cause 1:</b> Weak family supervision — with both parents often working long hours, many teenagers grow up with little guidance at home. <b>Cause 2:</b> Peer pressure and gangs — adolescents desperate for belonging may join street gangs that glorify crime.",
+      body2: "<b>Solution 1:</b> Expand after-school programmes and youth centres to give teenagers safe, supervised places to spend their free time. <b>Solution 2:</b> Schools should teach conflict resolution and offer mentoring, so at-risk youths find positive role models.",
+      concl: "In conclusion, youth crime will keep rising unless families, schools and communities act together to guide young people onto a better path."
+    }
+  },
+  {
+    type: "문제-해결형 · Problem & Solution",
+    kind: "problem",
+    q: "In many countries, people are becoming increasingly overweight. What are the causes of this, and what measures could be taken to solve the problem?",
+    qkr: "많은 국가에서 사람들이 점점 더 과체중이 되어 가고 있다. 그 원인은 무엇이며, 이 문제를 해결하기 위해 어떤 조치를 취할 수 있는가?",
+    stanceLabel: null,
+    stances: [],
+    thesis: {},
+    b1: "본론 1 — 원인",
+    b2: "본론 2 — 해결책",
+    sample: {
+      intro: "Obesity is becoming increasingly common in many countries. It is caused principally by unhealthy diets and sedentary lifestyles, and governments must take firm action to reverse it.",
+      body1: "<b>Cause 1:</b> Cheap processed food — fast food and sugary drinks are now cheaper and more available than fresh meals. <b>Cause 2:</b> Lack of exercise — desk jobs, cars and screen entertainment mean most people burn far fewer calories than previous generations.",
+      body2: "<b>Solution 1:</b> Tax sugary products and restrict junk-food advertising aimed at children, as several countries have already done. <b>Solution 2:</b> Invest in public sports facilities and cycle lanes so that exercise becomes a convenient part of daily life.",
+      concl: "In conclusion, only coordinated action on both diet and activity can halt the obesity epidemic."
+    }
+  },
+  {
+    type: "이중질문형 · Two-Part Question",
+    kind: "twopart",
+    q: "Happiness is considered very important in life. Why is it difficult to define? What factors are important in achieving happiness?",
+    qkr: "행복은 인생에서 매우 중요하다고 여겨진다. 왜 정의하기 어려운가? 행복을 이루는 데 중요한 요소는 무엇인가?",
+    stanceLabel: null,
+    stances: [],
+    thesis: {},
+    b1: "본론 1 — 정의가 어려운 이유",
+    b2: "본론 2 — 행복의 요소",
+    sample: {
+      intro: "Happiness is widely regarded as one of life\'s most important goals. It is difficult to define because it is deeply personal, but certain factors — such as relationships and a sense of purpose — are widely recognised as essential to achieving it.",
+      body1: "<b>Topic:</b> Happiness resists a single definition. <b>Explain:</b> What brings joy varies enormously: one person finds it in career success, another in quiet family life. <b>Example:</b> A billionaire and a monk may both claim to be happy, yet mean entirely different things by the word.",
+      body2: "<b>Topic:</b> Relationships and purpose matter most. <b>Explain:</b> Research consistently shows that close bonds with family and friends, plus work that feels meaningful, predict happiness far better than wealth. <b>Example:</b> Studies of lottery winners, for instance, find their joy fades within months, while strong friendships sustain it for decades.",
+      concl: "In conclusion, although happiness means different things to different people, nurturing relationships and living purposefully remain its most reliable foundations."
+    }
   }
 ];
 
-const $ = id => document.getElementById(id);
-const state = { topic: null, stance: null, timers: {}, writeStart: 0 };
+const CRIT_INFO = {
+  TR: {name:"Task Response", desc:"문제 파악 · 입장 일관성"},
+  CC: {name:"Coherence & Cohesion", desc:"문단 구조 · 연결어"},
+  LR: {name:"Lexical Resource", desc:"바꿔쓰기 · 연어"},
+  GRA:{name:"Grammatical Range & Accuracy", desc:"복문 · 정확성"}
+};
 
+const DRILLS = {
+TR: [
+ {q:"Some people think that the main benefit of international cooperation is in the protection of the environment, while others think that the main benefit is in the business world. Discuss both views and give your own opinion.\n이 문제의 요구사항으로 옳은 것은?",
+  choices:["환경 보호 주장만 펼친다","비즈니스 주장만 펼친다","양쪽 견해를 다루고 내 의견을 밝힌다","국제 협력의 역사만 설명한다"], answer:2,
+  why:"Discuss both views + give your own opinion → 양쪽 견해 + 내 의견이 정답."},
+ {q:"In many countries, people are becoming increasingly overweight. What are the causes of this, and what measures could be taken to solve the problem?\n이 문제는 몇 개의 질문에 답해야 할까?",
+  choices:["1개","2개","3개","질문이 없다"], answer:1,
+  why:"원인 + 해결책 = 2개 질문. 하나만 쓰면 TR 감점."},
+ {q:"Some experts believe that it is better for children to begin learning a foreign language at primary school rather than secondary school. Do the advantages of this outweigh the disadvantages?\n여기서 반드시 밝혀야 할 것은?",
+  choices:["외국어의 종류","내 판단(장점이 큰지, 단점이 큰지)","학교 시간표","전문가 이름"], answer:1,
+  why:"outweigh the disadvantages → 장단 비교 후 내 판단을 명확히 해야 함."}
+],
+CC: [
+ {q:"빈칸에 가장 자연스러운 연결어는?\n\"Regular exercise improves health. ______, it reduces stress and improves sleep quality.\"",
+  choices:["However","Furthermore","In contrast","Although"], answer:1,
+  why:"앞 내용을 이어받아 추가 → Furthermore."},
+ {q:"\"Online learning is convenient. ______, it lacks face-to-face interaction, which some students need.\"",
+  choices:["Moreover","Therefore","However","For instance"], answer:2,
+  why:"앞뒤가 대조 → However."},
+ {q:"\"Air pollution is worsening in big cities. ______, governments should invest more in public transport.\"",
+  choices:["In contrast","Consequently","For example","Nevertheless"], answer:1,
+  why:"원인 → 결과/주장 → Consequently."}
+],
+LR: [
+ {q:"다음 중 가장 자연스러운 바꿔쓰기는?\n원문: \"Crime rates are increasing in many cities.\"",
+  choices:["Crime numbers are going up in many cities.","In many urban areas, the incidence of crime is on the rise.","Many cities' crime rates are increased up.","Crime is more and more in cities."], answer:1,
+  why:"'the incidence of crime is on the rise' — 덜 흔한 표현 + 자연스러운 연어."},
+ {q:"원문: \"Technology has changed the way people communicate.\"",
+  choices:["Technology has made communication different.","Technological advances have transformed interpersonal communication.","Technology changed people's communication way.","The way of communication got changed by technology."], answer:1,
+  why:"'transformed interpersonal communication' — 정확하고 격식 있는 바꿔쓰기."},
+ {q:"원문: \"Governments should spend more money on education.\"",
+  choices:["Governments should put more money into education.","Greater public investment in education is needed.","Governments should spend money more on education.","Education needs governments to spend lots of money."], answer:1,
+  why:"'public investment in education' — 연어가 자연스러움."}
+],
+GRA: [
+ {q:"다음 중 가장 자연스러운 복문은?\n\"She studied hard. She passed the exam.\"",
+  choices:["She studied hard, she passed the exam.","Because she studied hard, she passed the exam.","She studied hard because she passed the exam.","Studying hard, the exam was passed by her."], answer:1,
+  why:"원인-결과 관계가 명확한 접속사 문장."},
+ {q:"\"The book was interesting. I bought it yesterday.\"",
+  choices:["The book which I bought it yesterday was interesting.","The book I bought yesterday was interesting.","The book was interesting, I bought yesterday.","Bought yesterday, the book was interesting."], answer:1,
+  why:"관계대명사 목적격 생략 — 가장 자연스러움."},
+ {q:"\"He was tired. He continued working.\"",
+  choices:["He was tired, he continued working.","Although he was tired, he continued working.","He was tired so he continued working.","Being tired, working was continued."], answer:1,
+  why:"양보 관계 → Although."}
+]};
+
+const CHECKS = [
+ {c:"TR", t:"질문의 모든 부분에 답했나?", s:"질문이 2개면 2개 다 · 입장 요구면 입장까지"},
+ {c:"TR", t:"내 입장이 서론부터 결론까지 일관되나?", s:"중간에 입장 바꾸지 않기"},
+ {c:"CC", t:"각 문단이 중심 문장으로 시작하나?", s:"한 문단 = 한 아이디어"},
+ {c:"CC", t:"연결어를 자연스럽게 썼나?", s:"같은 연결어 반복 없이, 남발 없이"},
+ {c:"LR", t:"주제 핵심 단어를 바꿔 쓴 표현이 있나?", s:"paraphrase가 곧 LR 점수"},
+ {c:"LR", t:"같은 단어를 3번 이상 반복하지 않았나?", s:"반복은 어휘 점수를 갉아먹음"},
+ {c:"GRA", t:"복문을 다양하게 3개 이상 썼나?", s:"접속사·관계대명사·분사구문 등"},
+ {c:"GRA", t:"다 쓰고 5분 검토했나?", s:"수일치·관사·철자 훑기"}
+];
+
+const $ = id => document.getElementById(id);
+const state = { topic:null, topicIdx:0, stance:null, timers:{}, writeStart:0, cur:"step-home", drill:null };
+
+// ---------- 저장소 ----------
+const DBKEY = "writing-atelier-v1";
+function loadDB(){
+  try{ return JSON.parse(localStorage.getItem(DBKEY)) || {sessions:[], reservations:[], drills:{}}; }
+  catch(e){ return {sessions:[], reservations:[], drills:{}}; }
+}
+function saveDB(db){ localStorage.setItem(DBKEY, JSON.stringify(db)); }
+let DB = loadDB();
+
+// ---------- 공통 ----------
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0"); }
+function countWords(s){ return s.trim().split(/\s+/).filter(Boolean).length; }
+
+function showTab(id){
+  document.querySelectorAll(".tabpage").forEach(t => t.hidden = true);
+  $(id).hidden = false;
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab===id));
+  window.scrollTo({top:0});
+  if(id==="tab-stats") renderStats();
+  if(id==="tab-drill") drillHome();
+  if(id==="tab-book") renderResvList();
+}
 function go(id){
   Object.values(state.timers).forEach(clearInterval);
   state.timers = {};
-  document.querySelectorAll("main > section").forEach(s => s.hidden = true);
+  document.querySelectorAll("#tab-train section").forEach(s => s.hidden = true);
   $(id).hidden = false;
-  document.querySelectorAll("#stepbar span").forEach(sp =>
-    sp.classList.toggle("on", sp.dataset.s === id));
+  state.cur = id;
+  document.querySelectorAll("#stepbar span").forEach(sp => sp.classList.toggle("on", sp.dataset.s===id));
   window.scrollTo({top:0});
-  if(id === "step-write"){
-    window.onbeforeunload = () => "작성 중인 글이 사라져. 정말 나갈까?";
-  } else {
-    window.onbeforeunload = null;
-  }
+  window.onbeforeunload = (id==="step-write") ? () => "작성 중인 글이 사라져. 정말 나갈까?" : null;
 }
-
-function fmt(sec){
-  const m = Math.floor(sec/60), s = sec%60;
-  return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
-}
-
 function countdown(total, clockEl, barEl, onEnd){
   let left = total;
   const tick = () => {
     $(clockEl).textContent = fmt(left);
-    $(barEl).style.width = (left/total*100) + "%";
-    $(clockEl).classList.toggle("urgent", left <= 60);
-    if(left <= 0){
-      clearInterval(state.timers[clockEl]);
-      if(onEnd) onEnd();
-    }
+    $(barEl).style.width = (left/total*100)+"%";
+    $(clockEl).classList.toggle("urgent", left<=60);
+    if(left<=0){ clearInterval(state.timers[clockEl]); if(onEnd) onEnd(); }
     left--;
   };
   tick();
   state.timers[clockEl] = setInterval(tick, 1000);
-  return () => total - left - 1; // elapsed seconds
 }
 
-// 홈 렌더링
+// ---------- 훈련 플로우 ----------
+function doneTopics(){
+  const s = new Set();
+  DB.sessions.forEach(x => s.add(x.topicKey));
+  return s;
+}
 function renderHome(){
-  $("topicList").innerHTML = TOPICS.map((t,i) => `
-    <div class="card topic-card" onclick="pickTopic(${i})">
-      <span class="badge">${t.type}</span>
-      <p class="en" style="font-size:15px">${t.q}</p>
-      <p class="kr">${t.qkr}</p>
+  const done = doneTopics();
+  $("topicList").innerHTML = TOPICS.map((t,i)=>{
+    const key = t.q.slice(0,24);
+    const badge = done.has(key) ? '<span class="badge done">완료 ✓</span> ' : '';
+    return `<div class="card topic-card" onclick="pickTopic(${i})">
+      ${badge}<span class="badge">${t.type}</span>
+      <p class="en" style="font-size:15px">${esc(t.q)}</p>
+      <p class="kr">${esc(t.qkr)}</p>
       <button class="btn ghost small">이 주제로 훈련하기 →</button>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 }
-
 function pickTopic(i){
-  state.topic = TOPICS[i];
-  state.stance = null;
+  state.topicIdx = i; state.topic = TOPICS[i]; state.stance = null;
   $("tType").textContent = state.topic.type;
   $("tQuestion").textContent = state.topic.q;
   $("tQuestionKr").textContent = state.topic.qkr;
-  go("step-topic");
+  showTab("tab-train"); go("step-topic");
 }
-
 function startPlan(){
   const t = state.topic;
-  // stance
   if(t.stanceLabel){
     $("stanceWrap").hidden = false;
-    $("stanceLabel").textContent = t.stanceLabel + "을 골라 (나중에 바꿔도 돼)";
-    $("stanceBtns").innerHTML = t.stances.map(s =>
-      `<button onclick="setStance('${s}', this)">${s}</button>`).join("");
-  } else {
-    $("stanceWrap").hidden = true;
-  }
-  $("b1Label").textContent = t.b1;
-  $("b2Label").textContent = t.b2;
-  ["b1Claim","b1Why","b2Claim","b2Why"].forEach(id => $(id).value = "");
+    $("stanceLabel").textContent = t.stanceLabel+"을 골라 (나중에 바꿔도 돼)";
+    $("stanceBtns").innerHTML = t.stances.map(s=>`<button onclick="setStance('${s}',this)">${s}</button>`).join("");
+  } else $("stanceWrap").hidden = true;
+  $("b1Label").textContent = t.b1; $("b2Label").textContent = t.b2;
+  ["b1Claim","b1Why","b2Claim","b2Why"].forEach(id=>$(id).value="");
   go("step-plan");
-  countdown(300, "planClock", "planBar", () => {
-    const n = document.createElement("div");
-    n.className = "notice";
-    n.textContent = "⏰ 5분 종료! 마무리하고 아웃라인으로 넘어가.";
+  countdown(300,"planClock","planBar",()=>{
+    const n=document.createElement("div"); n.className="notice";
+    n.textContent="⏰ 5분 종료! 마무리하고 아웃라인으로 넘어가.";
     $("step-plan").querySelector(".card").appendChild(n);
   });
 }
-
-function setStance(s, btn){
-  state.stance = s;
-  document.querySelectorAll("#stanceBtns button").forEach(b => b.classList.remove("sel"));
+function setStance(s,btn){
+  state.stance=s;
+  document.querySelectorAll("#stanceBtns button").forEach(b=>b.classList.remove("sel"));
   btn.classList.add("sel");
 }
-
-function esc(s){
-  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
-
 function buildOutline(){
-  const t = state.topic;
-  const c1 = $("b1Claim").value.trim(), w1 = $("b1Why").value.trim();
-  const c2 = $("b2Claim").value.trim(), w2 = $("b2Why").value.trim();
-  let thesis = "";
-  if(t.stanceLabel){
-    thesis = t.thesis[state.stance] || "[내 입장 문장을 여기에 써]";
-  } else {
-    thesis = "This problem is mainly caused by [원인 키워드] and requires [해결책 키워드].";
-  }
-  const para = (title, body) => `
-    <div class="para"><h4>${title}</h4><textarea rows="3">${esc(body)}</textarea></div>`;
+  const t=state.topic;
+  const c1=$("b1Claim").value.trim(), w1=$("b1Why").value.trim();
+  const c2=$("b2Claim").value.trim(), w2=$("b2Why").value.trim();
+  const thesis = t.stanceLabel ? (t.thesis[state.stance]||"[내 입장 문장을 여기에 써]")
+                               : "This problem is mainly caused by [원인 키워드] and requires [해결책 키워드].";
+  const para=(title,body)=>`<div class="para"><h4>${title}</h4><textarea rows="3">${esc(body)}</textarea></div>`;
   $("outlineBody").innerHTML =
-    para("① 서론 — 바꿔쓰기 + 입장", "It is often argued that [주제를 다르게 표현한 한 문장]. " + thesis) +
-    para("② 본론 1", (c1 ? "주장: " + c1 : "[주장 한 문장]") + "\n" + (w1 ? "근거/예시: " + w1 : "[근거 또는 예시]")) +
-    para("③ 본론 2", (c2 ? "주장: " + c2 : "[주장 한 문장]") + "\n" + (w2 ? "근거/예시: " + w2 : "[근거 또는 예시]")) +
-    para("④ 결론 — 입장 재확인", "In conclusion, [내 입장을 다른 말로 한 문장].");
-  $("sampleBox").hidden = true;
-  $("btnSample").textContent = "🏆 모범 아웃라인과 비교하기";
+    para("① 서론 — 바꿔쓰기 + 입장","It is often argued that [주제를 다르게 표현한 한 문장]. "+thesis)+
+    para("② 본론 1",(c1?"주장: "+c1:"[주장 한 문장]")+"\n"+(w1?"근거/예시: "+w1:"[근거 또는 예시]"))+
+    para("③ 본론 2",(c2?"주장: "+c2:"[주장 한 문장]")+"\n"+(w2?"근거/예시: "+w2:"[근거 또는 예시]"))+
+    para("④ 결론 — 입장 재확인","In conclusion, [내 입장을 다른 말로 한 문장].");
+  $("sampleBox").hidden=true; $("btnSample").textContent="🏆 모범 아웃라인과 비교하기";
   go("step-outline");
 }
-
 function toggleSample(){
-  const t = state.topic, box = $("sampleBox");
+  const t=state.topic, box=$("sampleBox");
   if(box.hidden){
-    box.innerHTML = `<h3>🏆 모범 아웃라인 (Band 9 수준)</h3>
+    box.innerHTML=`<h3>🏆 모범 아웃라인 (Band 9 수준)</h3>
       <p><b>서론</b></p><p class="en">${t.sample.intro}</p>
       <p><b>본론 1</b></p><p class="en">${t.sample.body1}</p>
       <p><b>본론 2</b></p><p class="en">${t.sample.body2}</p>
       <p><b>결론</b></p><p class="en">${t.sample.concl}</p>
       <p class="kr">👀 포인트: 각 본론이 <b>주장→설명→예시</b> 3단 구조야. 네 아웃라인도 이 모양인지 대봐.</p>`;
-    box.hidden = false;
-    $("btnSample").textContent = "모범 아웃라인 닫기";
-  } else {
-    box.hidden = true;
-    $("btnSample").textContent = "🏆 모범 아웃라인과 비교하기";
-  }
+    box.hidden=false; $("btnSample").textContent="모범 아웃라인 닫기";
+  } else { box.hidden=true; $("btnSample").textContent="🏆 모범 아웃라인과 비교하기"; }
 }
-
 function startWrite(){
-  $("essay").value = "";
-  updateWC();
-  // 아웃라인 엿보기 내용
-  const paras = $("outlineBody").querySelectorAll("textarea");
-  const titles = ["① 서론","② 본론 1","③ 본론 2","④ 결론"];
-  $("peekBox").innerHTML = paras.length
-    ? `<div class="hint" style="margin-top:0">${titles.map((h,i)=>`<b>${h}</b><br>${esc(paras[i].value).replace(/\n/g,"<br>")}`).join("<br><br>")}</div>`
-    : "";
-  $("peekBox").hidden = true;
-  $("btnPeek").textContent = "📋 아웃라인 펼쳐보기";
+  $("essay").value=""; updateWC();
+  const paras=$("outlineBody").querySelectorAll("textarea");
+  const titles=["① 서론","② 본론 1","③ 본론 2","④ 결론"];
+  $("peekBox").innerHTML = paras.length ?
+    `<div class="hint" style="margin-top:0">${titles.map((h,i)=>`<b>${h}</b><br>${esc(paras[i].value).replace(/\n/g,"<br>")}`).join("<br><br>")}</div>` : "";
+  $("peekBox").hidden=true; $("btnPeek").textContent="📋 아웃라인 펼쳐보기";
   go("step-write");
-  state.writeStart = Date.now();
-  state.elapsed = countdown(2400, "writeClock", "writeBar", () => {
-    const n = document.createElement("div");
-    n.className = "notice";
-    n.textContent = "⏰ 40분 종료! 마무리하고 '작성 완료'를 눌러.";
+  state.writeStart=Date.now();
+  countdown(2400,"writeClock","writeBar",()=>{
+    const n=document.createElement("div"); n.className="notice";
+    n.textContent="⏰ 40분 종료! 마무리하고 '작성 완료'를 눌러.";
     $("step-write").appendChild(n);
   });
 }
-
-function countWords(s){
-  return s.trim().split(/\s+/).filter(Boolean).length;
-}
-
 function updateWC(){
-  const n = countWords($("essay").value);
-  $("wcNum").textContent = n;
-  $("wcBar").style.width = Math.min(100, n/250*100) + "%";
-  $("wcWrap").classList.toggle("ok", n >= 250);
+  const n=countWords($("essay").value);
+  $("wcNum").textContent=n;
+  $("wcBar").style.width=Math.min(100,n/250*100)+"%";
+  $("wcWrap").classList.toggle("ok",n>=250);
 }
-
 function finish(){
-  const secs = Math.floor((Date.now() - state.writeStart)/1000);
-  const n = countWords($("essay").value);
-  $("dTime").textContent = fmt(secs) + " / 40:00";
-  $("dWords").textContent = n + "단어";
-  $("dGoal").innerHTML = n >= 250
-    ? '<span class="pill ok">달성 🎯</span>'
-    : '<span class="pill no">미달 (' + (250-n) + '단어 부족)</span>';
+  const secs=Math.floor((Date.now()-state.writeStart)/1000);
+  const n=countWords($("essay").value);
+  $("dTime").textContent=fmt(secs)+" / 40:00";
+  $("dWords").textContent=n+"단어";
+  $("dGoal").innerHTML = n>=250 ? '<span class="pill ok">달성 🎯</span>' : '<span class="pill no">미달 ('+(250-n)+'단어 부족)</span>';
+  state.lastResult={secs, words:n};
+  renderChecks();
+  $("bandResult").style.display="none"; $("btnBand").style.display="";
   go("step-done");
 }
 
-// 이벤트 바인딩
-$("btnStartPlan").onclick = startPlan;
-$("btnToOutline").onclick = buildOutline;
-$("btnSample").onclick = toggleSample;
-$("btnStartWrite").onclick = startWrite;
-$("btnPeek").onclick = () => {
-  const b = $("peekBox");
-  b.hidden = !b.hidden;
-  $("btnPeek").textContent = b.hidden ? "📋 아웃라인 펼쳐보기" : "📋 아웃라인 접기";
-};
-$("essay").addEventListener("input", updateWC);
-$("btnFinish").onclick = finish;
-$("btnRetry").onclick = () => pickTopic(TOPICS.indexOf(state.topic));
+// ---------- 밴드 자가진단 ----------
+function renderChecks(){
+  $("checkList").innerHTML = CHECKS.map((c,i)=>
+    `<label class="check"><input type="checkbox" data-i="${i}">
+     <span><i>${c.c}</i>${c.t}<small>${c.s}</small></span></label>`).join("");
+}
+function calcBand(){
+  const boxes=document.querySelectorAll("#checkList input");
+  const score={TR:0,CC:0,LR:0,GRA:0};
+  boxes.forEach(b=>{ if(b.checked) score[CHECKS[+b.dataset.i].c]++; });
+  const band=c=> c===2?7.0 : c===1?6.0 : 5.0;
+  const bands={TR:band(score.TR),CC:band(score.CC),LR:band(score.LR),GRA:band(score.GRA)};
+  const overall=Math.round((bands.TR+bands.CC+bands.LR+bands.GRA)/4*2)/2;
+  let weak="TR", wv=99;
+  Object.keys(bands).forEach(k=>{ if(bands[k]<wv){wv=bands[k]; weak=k;} });
+  $("bandOverall").textContent=overall.toFixed(1);
+  $("bandCrit").innerHTML=Object.keys(bands).map(k=>
+    `<div class="row${k===weak?' weak':''}"><span><b style="color:var(--gold)">${k}</b> · ${CRIT_INFO[k].name}</span><b>${bands[k].toFixed(1)}</b></div>`).join("");
+  $("bandAdvice").innerHTML=`🎯 최약점: <b>${weak} (${CRIT_INFO[weak].name})</b> — 
+    <a href="#" onclick="showTab('tab-drill');startDrill('${weak}');return false;" style="color:var(--gold)">지금 ${CRIT_INFO[weak].desc} 드릴 풀기 →</a>`;
+  $("bandResult").style.display=""; $("btnBand").style.display="none";
+  // 기록 저장
+  const r=state.lastResult||{secs:0,words:0};
+  DB.sessions.push({date:new Date().toISOString(), topicKey:state.topic.q.slice(0,24),
+    type:state.topic.type, words:r.words, secs:r.secs, bands});
+  saveDB(DB);
+}
 
-renderHome();
+// ---------- 드릴 ----------
+function drillHome(){
+  ["drill-home","drill-play","drill-done"].forEach(id=>$(id).hidden=true);
+  $("drill-home").hidden=false;
+  $("drillCards").innerHTML=Object.keys(DRILLS).map(k=>{
+    const best=DB.drills[k];
+    return `<div class="card drill-card" onclick="startDrill('${k}')">
+      <span class="badge">${k}</span>
+      <h2 style="font-size:17px">${CRIT_INFO[k].name}</h2>
+      <p class="kr">${CRIT_INFO[k].desc} · ${DRILLS[k].length}문항 · 약 5분</p>
+      <p class="meta">${best!=null?("최고 기록: "+best+"/"+DRILLS[k].length):"아직 안 풀어봄"}</p>
+      <button class="btn ghost small">드릴 시작 →</button>
+    </div>`;
+  }).join("");
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function startDrill(k){
+  showTab("tab-drill");
+  state.drill={k, qs:shuffle(DRILLS[k].map((q,i)=>({...q,oi:i}))), idx:0, correct:0};
+  ["drill-home","drill-done"].forEach(id=>$(id).hidden=true);
+  $("drill-play").hidden=false;
+  renderDrillQ();
+}
+function renderDrillQ(){
+  const d=state.drill, q=d.qs[d.idx];
+  $("drillCrit").textContent=d.k+" · "+CRIT_INFO[d.k].name;
+  $("drillProg").textContent=(d.idx+1)+" / "+d.qs.length+" · 맞춘 "+d.correct+"개";
+  $("drillQ").textContent=q.q;
+  $("drillWhy").style.display="none"; $("drillNext").style.display="none";
+  $("drillChoices").innerHTML=q.choices.map((c,i)=>
+    `<button class="choice" onclick="drillAnswer(${i})">${c}</button>`).join("");
+}
+function drillAnswer(i){
+  const d=state.drill, q=d.qs[d.idx];
+  const btns=document.querySelectorAll("#drillChoices .choice");
+  btns.forEach(b=>b.disabled=true);
+  btns[q.answer].classList.add("correct");
+  if(i===q.answer){ d.correct++; }
+  else btns[i].classList.add("wrong");
+  $("drillWhy").innerHTML=(i===q.answer?"⭕ 정답! ":"❌ 땡! ")+esc(q.why);
+  $("drillWhy").style.display="";
+  const last=d.idx===d.qs.length-1;
+  $("drillNext").textContent= last ? "결과 보기 →" : "다음 문제 →";
+  $("drillNext").style.display="";
+}
+function drillNext(){
+  const d=state.drill;
+  if(d.idx < d.qs.length-1){ d.idx++; renderDrillQ(); }
+  else{
+    $("drill-play").hidden=true; $("drill-done").hidden=false;
+    $("drillScore").textContent=d.correct+" / "+d.qs.length;
+    const rate=d.correct/d.qs.length;
+    $("drillMsg").textContent = rate===1 ? "완벽해! 이 기준은 이제 네 무기야." :
+      rate>=0.66 ? "좋아. 틀린 건 해설 다시 보고 넘어가." : "해설을 천천히 다시 읽고 한 번 더 풀어봐.";
+    const prev=DB.drills[d.k]||0;
+    if(d.correct>prev){ DB.drills[d.k]=d.correct; saveDB(DB); }
+    state.drill.k2=d.k;
+  }
+}
+function drillQuit(){ drillHome(); }
+
+// ---------- 예약 ----------
+function renderResvTopics(){
+  $("resvTopic").innerHTML=TOPICS.map((t,i)=>`<option value="${i}">${t.type} — ${esc(t.q.slice(0,40))}…</option>`).join("");
+  const d=new Date(); d.setDate(d.getDate()+1);
+  $("resvDate").value=d.toISOString().slice(0,10);
+  $("resvTime").value="20:00";
+}
+function addResv(){
+  const date=$("resvDate").value, time=$("resvTime").value;
+  if(!date||!time){ alert("날짜와 시간을 골라줘."); return; }
+  const when=new Date(date+"T"+time).getTime();
+  if(when<Date.now()){ alert("이미 지난 시간이야. 미래로 잡아줘."); return; }
+  DB.reservations.push({id:Date.now(), when, topicIdx:+$("resvTopic").value, notified:false});
+  saveDB(DB); renderResvList();
+  alert("예약됐어! 시간이 되면 알려줄게. 🗓");
+}
+function renderResvList(){
+  const now=Date.now();
+  const list=DB.reservations.filter(r=>r.when>now-30*60000).sort((a,b)=>a.when-b.when);
+  if(!list.length){ $("resvList").innerHTML='<p class="meta">예약이 없어. 위에서 잡아봐.</p>'; return; }
+  $("resvList").innerHTML=list.map(r=>{
+    const d=new Date(r.when);
+    const ds=(d.getMonth()+1)+"/"+d.getDate()+" "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+    return `<div class="resv"><div class="info"><b>${ds}</b><span class="meta">${TOPICS[r.topicIdx].type}</span></div>
+      <button class="go" onclick="pickTopic(${r.topicIdx})">시작하기</button>
+      <button onclick="delResv(${r.id})">삭제</button></div>`;
+  }).join("");
+}
+function delResv(id){
+  DB.reservations=DB.reservations.filter(r=>r.id!==id);
+  saveDB(DB); renderResvList();
+}
+let dueShownFor=null;
+function checkDue(){
+  const now=Date.now();
+  const r=DB.reservations.find(x=>!x.notified && now>=x.when && now-x.when<30*60000);
+  if(r && dueShownFor!==r.id){
+    dueShownFor=r.id; r.notified=true; saveDB(DB);
+    $("dueBanner").hidden=false;
+    $("dueTitle").textContent="⏰ 예약한 훈련 시간이야! ("+TOPICS[r.topicIdx].type+")";
+    $("dueStart").onclick=()=>{ $("dueBanner").hidden=true; pickTopic(r.topicIdx); };
+    if("Notification" in window && Notification.permission==="granted"){
+      try{ new Notification("Writing Atelier",{body:"예약한 Task 2 훈련 시간이야!"}); }catch(e){}
+    }
+    renderResvList();
+  }
+}
+$("dueLater").onclick=()=>{ $("dueBanner").hidden=true; };
+
+// ---------- 기록 ----------
+function renderStats(){
+  const ss=DB.sessions, n=ss.length;
+  $("statSessions").textContent=n;
+  const days=[...new Set(ss.map(s=>s.date.slice(0,10)))].sort();
+  let streak=0;
+  const today=new Date().toISOString().slice(0,10);
+  const yest=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if(days.includes(today)||days.includes(yest)){
+    let cur=days.includes(today)?today:yest;
+    while(days.includes(cur)){ streak++; cur=new Date(new Date(cur)-86400000).toISOString().slice(0,10); }
+  }
+  $("statStreak").textContent=streak;
+  $("statWords").textContent= n? Math.round(ss.reduce((a,s)=>a+s.words,0)/n):0;
+  $("statGoal").textContent= n? Math.round(ss.filter(s=>s.words>=250).length/n*100)+"%":"0%";
+  const withB=ss.filter(s=>s.bands);
+  if(withB.length){
+    const avg={TR:0,CC:0,LR:0,GRA:0};
+    withB.forEach(s=>Object.keys(avg).forEach(k=>avg[k]+=s.bands[k]));
+    Object.keys(avg).forEach(k=>avg[k]/=withB.length);
+    let weak="TR"; Object.keys(avg).forEach(k=>{ if(avg[k]<avg[weak]) weak=k; });
+    $("statBands").innerHTML=Object.keys(avg).map(k=>
+      `<div class="row${k===weak?' weak':''}"><span><b style="color:var(--gold)">${k}</b> · ${CRIT_INFO[k].name}</span><b>${avg[k].toFixed(1)}</b></div>`).join("");
+    const sw=$("statWeak"); sw.style.display="";
+    sw.innerHTML=`🎯 최약점: <b>${weak} (${CRIT_INFO[weak].name})</b> — <a href="#" onclick="showTab('tab-drill');startDrill('${weak}');return false;" style="color:var(--gold)">드릴로 보완하기 →</a>`;
+  }
+  $("sessList").innerHTML = n ? ss.slice(-8).reverse().map(s=>{
+    const d=new Date(s.date), ds=(d.getMonth()+1)+"/"+d.getDate();
+    return `<div class="stat"><span>${ds} · ${s.type.split(" ·")[0]}</span><b>${s.words}단어${s.bands?(" · "+(Math.round((s.bands.TR+s.bands.CC+s.bands.LR+s.bands.GRA)/4*2)/2).toFixed(1)):""}</b></div>`;
+  }).join("") : '<p class="meta">아직 훈련 기록이 없어.</p>';
+  renderHome();
+}
+
+// ---------- 초기화 ----------
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+$("btnStartPlan").onclick=startPlan;
+$("btnToOutline").onclick=buildOutline;
+$("btnSample").onclick=toggleSample;
+$("btnStartWrite").onclick=startWrite;
+$("btnPeek").onclick=()=>{ const b=$("peekBox"); b.hidden=!b.hidden; $("btnPeek").textContent=b.hidden?"📋 아웃라인 펼쳐보기":"📋 아웃라인 접기"; };
+$("essay").addEventListener("input",updateWC);
+$("btnFinish").onclick=finish;
+$("btnBand").onclick=calcBand;
+$("btnRetry").onclick=()=>pickTopic(state.topicIdx);
+$("drillNext").onclick=drillNext;
+$("drillRetry").onclick=()=>startDrill(state.drill?state.drill.k2:"TR");
+$("btnAddResv").onclick=addResv;
+$("btnNotif").onclick=()=>{
+  if(!("Notification" in window)){ alert("이 기기/브라우저는 알림을 지원하지 않아."); return; }
+  Notification.requestPermission().then(p=>alert(p==="granted"?"알림 켰어! 🔔":"알림이 거부됐어. 폰 설정에서 허용해줘."));
+};
+renderHome(); drillHome(); renderResvTopics(); renderResvList();
+setInterval(checkDue, 30000); checkDue();
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>
 </body>
 </html>
