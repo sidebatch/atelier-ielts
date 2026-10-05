@@ -205,7 +205,10 @@
         </div>
         <div class="essay-text" id="erBody"></div>
         <div id="notePanel" hidden>
-          <span class="tag" id="noteTag"></span>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="tag" id="noteTag"></span>
+            <button class="btn ghost small" onclick="hideNote()">✕ 닫기</button>
+          </div>
           <p id="noteText"></p>
         </div>
         <button class="btn" id="btnErQuiz">이해 확인 퀴즈 풀기 (2개)</button>
@@ -770,6 +773,10 @@ function openEssay(i){
   ).join("");
   $("notePanel").hidden=true;
   window.scrollTo({top:0});
+}
+function hideNote(){
+  $("notePanel").hidden=true;
+  document.querySelectorAll(".ann.sel").forEach(x=>x.classList.remove("sel"));
 }
 function tapAnn(el){
   document.querySelectorAll(".ann.sel").forEach(x=>x.classList.remove("sel"));
