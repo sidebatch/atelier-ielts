@@ -249,6 +249,7 @@
         <p class="kr" id="edMsg"></p>
         <div id="edRecap" style="text-align:left"></div>
         <button class="btn" id="edNext">다음 에세이 읽기</button>
+        <button class="btn ghost small" id="edRetry" style="display:none" onclick="startEssayQuiz()">🔁 퀴즈 다시 풀기</button>
         <button class="btn ghost small" onclick="showTab('tab-essay'); essayHome()">목록으로</button>
       </div>
     </section>
@@ -962,6 +963,7 @@ function nextEq(){
   $("edMsg").textContent = state.eq.score===e.quiz.length
     ? "완벽해! 이 에세이의 패턴을 네 것으로 만들었어."
     : "좋아. 틀린 문제는 해설을 다시 읽고 넘어가.";
+  $("edRetry").style.display = state.eq.score<e.quiz.length ? "" : "none";
   $("edRecap").innerHTML=`<div class="recap-box"><b>📝 이 에세이에서 훔쳐갈 패턴 3가지</b>${e.recap.map(r=>`<div class="recap-item"><b>📌 ${esc(r.p)}</b><p class="rx">“${esc(r.x)}”</p><p class="rh">✍️ ${esc(r.how)}</p></div>`).join("")}</div>`;
   const nxt=ESSAYS.findIndex((_,i)=>DB.essays[i]==null);
   $("edNext").textContent = nxt>=0 ? `다음 에세이 읽기 (${nxt+1}번) →` : "목록으로 돌아가기";
