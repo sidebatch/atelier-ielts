@@ -185,6 +185,7 @@
         <div class="bandbig" id="drillScore"></div>
         <p class="kr" id="drillMsg"></p>
         <button class="btn" id="drillRetry">다시 풀기</button>
+        <button class="btn" id="drillMissBtn" style="display:none"></button>
         <button class="btn ghost small" onclick="showTab('tab-drill'); drillHome()">다른 드릴 고르기</button>
       </div>
     </section>
@@ -685,6 +686,13 @@ const CRIT_INFO = {
   LR: {name:"Lexical Resource", desc:"바꿔쓰기 · 연어"},
   GRA:{name:"Grammatical Range & Accuracy", desc:"복문 · 정확성"}
 };
+/* 오답 패턴 태그: DRILLS[k]의 문항 순서와 1:1 매칭 (약점 하위 유형 진단용) */
+const DRILL_TAGS = {
+  TR:["의견형","논의형","장단점형","문제·해결형","이중질문형","의견형","이중질문형","의견형"],
+  CC:["대조","추가","인과","예시","양보","대조","인과","추가"],
+  LR:["바꿔쓰기","바꿔쓰기","연어","연어","연어","연어","연어","연어"],
+  GRA:["관계대명사","관계대명사","접속사","접속사","접속사","관계대명사","관계대명사","접속사"]
+};
 const TAG_INFO = {
   P:{t:"바꿔쓰기", c:"Lexical Resource"},
   T:{t:"중심문장", c:"Coherence & Cohesion · Task Response"},
@@ -699,8 +707,8 @@ const state = { essayIdx:0, drill:null, eq:null };
 // ---------- 저장소 (v3) ----------
 const DBKEY = "writing-atelier-v2";
 function loadDB(){
-  try{ return JSON.parse(localStorage.getItem(DBKEY)) || {drills:{}, essays:{}, reservations:[], days:[]}; }
-  catch(e){ return {drills:{}, essays:{}, reservations:[], drills:{}, essays:{}, reservations:[], days:[]}; }
+  try{ return JSON.parse(localStorage.getItem(DBKEY)) || {drills:{}, essays:{}, reservations:[], days:[], miss:{}}; }
+  catch(e){ return {drills:{}, essays:{}, reservations:[], days:[], miss:{}}; }
 }
 function saveDB(db){ localStorage.setItem(DBKEY, JSON.stringify(db)); }
 let DB = loadDB();
@@ -751,11 +759,12 @@ function goEssayList(){ showTab("tab-essay"); essayHome(); }
 function renderRoutine(){
   markDay();
   const d=DB.daily, w=weakestCrit(), ni=nextEssayIdx();
+  const missN=missCount(w);
   const rows=[
     {done:d.essay, fn: ni>=0?`goEssay(${ni})`:"goEssayList()",
      label:`📖 에세이 1개 읽기 (10분)<br><span class="meta">${ni>=0?("#"+(ni+1)+" · "+esc(ESSAYS[ni].title)):"5개 전부 읽음! 다시 읽어도 좋아"}</span>`},
     {done:d.drill, fn:"goWeakDrill()",
-     label:`🎯 약점 드릴 1세트 (5분)<br><span class="meta">지금 가장 약한 기준: ${w} · ${CRIT_INFO[w].name}</span>`}
+     label:`🎯 약점 드릴 1세트 (5분)<br><span class="meta">지금 가장 약한 기준: ${w} · ${CRIT_INFO[w].name}${missN?` · ❌ 틀린 문제 ${missN}개 정복 대기`:""}</span>`}
   ];
   $("routineList").innerHTML=rows.map(r=>
     `<div class="stat"><span>${r.done?"✅":"⬜"} ${r.label}</span><button class="btn ghost small" onclick="${r.fn}">${r.done?"다시 하기":"시작 →"}</button></div>`
@@ -773,22 +782,35 @@ function drillHome(){
   $("drill-home").hidden=false;
   $("drillCards").innerHTML=Object.keys(DRILLS).map(k=>{
     const best=DB.drills[k];
+    const missN=DB.miss&&DB.miss[k]?Object.keys(DB.miss[k]).length:0;
     return `<div class="card drill-card" onclick="startDrill('${k}')">
       <span class="badge">${k}</span>
       <h2 style="font-size:17px">${CRIT_INFO[k].name}</h2>
       <p class="kr">${CRIT_INFO[k].desc} · ${DRILLS[k].length}문항 · 약 5분</p>
       <p class="meta">${best!=null?("최고 기록: "+best+"/"+DRILLS[k].length):"아직 안 풀어봄"}</p>
       <button class="btn ghost small">드릴 시작 →</button>
+      ${missN?`<button class="btn ghost small" style="margin-left:6px" onclick="event.stopPropagation();startDrillMiss('${k}')">❌ 틀린 문제 ${missN}개만 다시 풀기</button>`:""}
     </div>`;
   }).join("");
 }
-function startDrill(k){
+/* onlyIdx: 원래 문항 인덱스 배열 — 틀린 문제 정복 모드 */
+function startDrill(k, onlyIdx){
   showTab("tab-drill");
-  state.drill={k, qs:shuffle(DRILLS[k].map(q=>({...q}))), idx:0, correct:0, done:0};
+  const pool = (onlyIdx&&onlyIdx.length)
+    ? onlyIdx.map(i=>({...DRILLS[k][i], oi:i}))
+    : DRILLS[k].map((q,i)=>({...q, oi:i}));
+  state.drill={k, qs:shuffle(pool), idx:0, correct:0, done:0, missOnly:!!(onlyIdx&&onlyIdx.length), missIdx:[]};
   ["drill-home","drill-done"].forEach(id=>$(id).hidden=true);
   $("drill-play").hidden=false;
   renderDrillQ();
 }
+function startDrillMiss(k){
+  const M=(DB.miss||{})[k]||{};
+  const idx=Object.keys(M).map(Number);
+  if(!idx.length){ drillHome(); return; }
+  startDrill(k, idx);
+}
+function missCount(k){ return DB.miss&&DB.miss[k]?Object.keys(DB.miss[k]).length:0; }
 function renderDrillQ(){
   const d=state.drill, q=d.qs[d.idx];
   $("drillCrit").textContent=d.k+" · "+CRIT_INFO[d.k].name;
@@ -803,7 +825,18 @@ function drillAnswer(i){
   const btns=document.querySelectorAll("#drillChoices .choice");
   btns.forEach(b=>b.disabled=true);
   btns[q.answer].classList.add("correct");
-  if(i===q.answer) d.correct++; else btns[i].classList.add("wrong");
+  if(i===q.answer){
+    d.correct++;
+    /* 정복 모드에서 맞히면 오답 목록에서 제거 */
+    if(d.missOnly){ const M=(DB.miss||{})[d.k];
+      if(M){ delete M[q.oi]; if(!Object.keys(M).length) delete DB.miss[d.k]; saveDB(DB); } }
+  } else {
+    btns[i].classList.add("wrong");
+    /* 오답 기록: 기준 → 원래 문항 인덱스 → 누적 틀린 횟수 */
+    DB.miss=DB.miss||{}; DB.miss[d.k]=DB.miss[d.k]||{};
+    DB.miss[d.k][q.oi]=(DB.miss[d.k][q.oi]||0)+1; saveDB(DB);
+    d.missIdx.push(q.oi);
+  }
   $("drillWhy").innerHTML=(i===q.answer?"⭕ 정답! ":"❌ 땡! ")+esc(q.why);
   $("drillWhy").style.display="";
   $("drillProg").textContent=(d.idx+1)+" / "+d.qs.length+" · 맞춘 "+d.correct+"개";
@@ -818,9 +851,21 @@ function drillNext(){
     $("drill-play").hidden=true; $("drill-done").hidden=false;
     $("drillScore").textContent=d.correct+" / "+d.qs.length;
     const rate=d.correct/d.qs.length;
-    $("drillMsg").textContent = rate===1 ? "완벽해! 이 기준은 이제 네 무기야." :
+    const missN=d.missIdx.length;
+    /* 오답 패턴 태그 집계 (교사 처방용) */
+    const tagCnt={};
+    d.missIdx.forEach(oi=>{ const t=(DRILL_TAGS[d.k]||[])[oi]||"?"; tagCnt[t]=(tagCnt[t]||0)+1; });
+    const tagLine=Object.keys(tagCnt).sort((a,b)=>tagCnt[b]-tagCnt[a]).map(t=>`${t} ${tagCnt[t]}개`).join(" · ");
+    let msg = rate===1 ? "완벽해! 이 기준은 이제 네 무기야." :
       rate>=0.6 ? "좋아. 틀린 건 해설 다시 보고 넘어가." : "해설을 천천히 다시 읽고 한 번 더 풀어봐.";
-    if(d.correct>(DB.drills[d.k]||-1)){ DB.drills[d.k]=d.correct; }
+    if(d.missOnly && missN===0) msg="🎉 틀린 문제 전부 정복! 이 기준의 약점이 하나 줄었어.";
+    $("drillMsg").innerHTML = esc(msg) + (missN>0 && tagLine
+      ? `<br><span class="meta">⚠️ 자주 틀리는 유형: ${esc(tagLine)} — 아래 버튼으로 바로 정복해봐.</span>` : "");
+    /* 틀린 문제만 다시 풀기 버튼 */
+    const mb=$("drillMissBtn");
+    if(missN>0){ mb.style.display=""; mb.textContent=`❌ 틀린 ${missN}문제만 다시 풀기`; mb.onclick=()=>startDrillMiss(d.k); }
+    else mb.style.display="none";
+    if(!d.missOnly && d.correct>(DB.drills[d.k]||-1)){ DB.drills[d.k]=d.correct; }
     DB.drillSolved=(DB.drillSolved||0)+d.qs.length;
     markDay();
     DB.daily.drill=true; saveDB(DB);
@@ -982,9 +1027,9 @@ function renderStats(){
     return `<div class="stat"><span><b style="color:var(--gold)">${k}</b> · ${CRIT_INFO[k].name}</span><b>${best!=null?best+"/"+DRILLS[k].length:"—"}</b></div>`;
   }).join("");
   const w=weakestCrit();
-  const bestW=DB.drills[w];
+  const missN=missCount(w);
   $("statWeak").style.display="";
-  $("statWeak").innerHTML="💡 지금 가장 약한 기준은 <b>"+w+"</b>. 홈에서 약점 드릴 바로 풀어봐.";
+  $("statWeak").innerHTML="💡 지금 가장 약한 기준은 <b>"+w+"</b>"+(missN?(" · ❌ 틀린 문제 "+missN+"개가 쌓여 있어. 드릴 탭에서 정복해봐."):" . 홈에서 약점 드릴 바로 풀어봐.");
   $("statEssayList").innerHTML=ESSAYS.map((e,i)=>{
     const s=(DB.essays||{})[i];
     return `<div class="stat"><span>${i+1}. ${esc(e.title)}</span><b>${s!=null?s+"/2 ✅":"—"}</b></div>`;
