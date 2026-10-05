@@ -972,7 +972,7 @@ function renderStats(){
   $("statStreak").textContent=streak;
   $("statStreakMsg").textContent =
     streak>=7 ? "🏆 7일 연속 돌파! 꾸준함이 밴드 7을 만든다." :
-    streak>=3 ? `🔥 ${streak}일 연속! 습관이 붙고 있어.` :
+    streak>=2 ? `🔥 ${streak}일 연속! 습관이 붙고 있어.` :
     streak===1 ? "👍 연속 1일! 내일도 15분만." :
     (days.length ? "오늘 15분 루틴을 마치면 연속 기록이 다시 시작돼." : "아직 기록이 없어. 홈의 15분 루틴부터 시작해봐!");
   $("statEssays").textContent=Object.keys(DB.essays||{}).length+" / "+ESSAYS.length;
