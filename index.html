@@ -18,7 +18,7 @@
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   body{margin:0; background:var(--bg); color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
-    line-height:1.6; padding-bottom:env(safe-area-inset-bottom);}
+    line-height:1.7; padding-bottom:env(safe-area-inset-bottom);}
   header{position:sticky; top:0; z-index:10; background:rgba(20,17,13,.96);
     border-bottom:1px solid var(--line); padding:14px 18px; backdrop-filter:blur(6px);}
   header .brand{font-family:Georgia,serif; font-size:20px; letter-spacing:.5px;}
@@ -88,12 +88,12 @@
   .drill-card{cursor:pointer;}
   .drill-card:active{border-color:var(--gold-dim);}
   .choice{display:block; width:100%; text-align:left; border:1px solid var(--line); background:#0f0d0a;
-    color:var(--text); border-radius:10px; padding:14px; font-size:15px; margin-top:8px; cursor:pointer; line-height:1.5;}
+    color:var(--text); border-radius:10px; padding:14px; font-size:15.5px; margin-top:8px; cursor:pointer; line-height:1.6;}
   .choice.correct{border-color:var(--green); background:#1d2b1a;}
   .choice.wrong{border-color:var(--red); background:#2b1d1a;}
   .choice:disabled{cursor:default; opacity:.95;}
   .bandbig{font-size:44px; font-weight:800; color:var(--gold); font-variant-numeric:tabular-nums; text-align:center; margin:6px 0;}
-  .stat{display:flex; justify-content:space-between; padding:10px 2px; border-bottom:1px solid var(--line); font-size:15px;}
+  .stat{display:flex; justify-content:space-between; padding:11px 2px; border-bottom:1px solid var(--line); font-size:15.5px;}
   .stat:last-child{border-bottom:none;}
   /* 에세이 주석 */
   .essay-text{font-family:Georgia,serif; font-size:16.5px; line-height:1.9; white-space:pre-wrap;}
@@ -123,6 +123,8 @@
   .recap-item .rx{font-family:Georgia,serif; font-size:14px; color:var(--gold); margin:4px 0;}
   .recap-item .rh{font-size:14px; margin:0; color:var(--muted); line-height:1.6;}
   .essay-card{cursor:pointer;}
+  .patcard{cursor:pointer; text-align:center; padding:26px 18px; background:#141109;}
+  .patcard:active{border-color:var(--gold-dim);}
   .essay-card:active{border-color:var(--gold-dim);}
   /* 360px대 좁은 폰: 탭 라벨이 버튼 밖으로 삐져나오지 않도록 */
   @media (max-width:380px){
@@ -151,7 +153,7 @@
     <section>
       <div class="card">
         <h2>읽으면서 배우는 라이팅</h2>
-        <p class="kr">이 앱엔 <b style="color:var(--gold)">작문 숙제가 없어</b>. 모범 에세이를 읽고, 색깔 표시를 탭하고, 퀴즈를 고르면 돼. 가만히 봐도 4개 평가기준이 눈에 들어오게 설계했어.</p>
+        <p class="kr">이 앱엔 <b style="color:var(--gold)">작문 숙제가 없어</b>. 모범 에세이를 읽고, 색깔 표시를 탭하고, 패턴을 훔치면 돼. 가만히 봐도 4개 평가기준이 눈에 들어오게 설계했어.</p>
       </div>
       <div class="card">
         <h3>☀️ 오늘의 15분 루틴</h3>
@@ -203,7 +205,7 @@
     <section id="essay-list">
       <div class="card">
         <h2>📖 모범 에세이</h2>
-        <p class="kr">밴드 9 수준 에세이 5개. 색깔 표시를 탭하면 <b>왜 좋은지</b> 설명이 나와. 읽고 나면 이해 확인 퀴즈 2개.</p>
+        <p class="kr">밴드 9 수준 에세이 5개. 색깔 표시를 탭하면 <b>왜 좋은지</b> 설명이 나와. 읽고 나면 패턴 5장을 훔쳐.</p>
       </div>
       <div id="essayCards"></div>
     </section>
@@ -229,28 +231,30 @@
           </div>
           <p id="noteText"></p>
         </div>
-        <button class="btn" id="btnErQuiz">이해 확인 퀴즈 풀기 (2개)</button>
+        <button class="btn" id="btnErQuiz">패턴 훔치기 (5장)</button>
         <button class="btn ghost small" onclick="essayHome()">목록으로</button>
       </div>
     </section>
     <section id="essay-quiz" hidden>
       <div class="card">
-        <span class="badge">이해 확인</span>
-        <p class="meta" id="eqProg"></p>
-        <p class="en" id="eqQ" style="font-size:15px"></p>
-        <div id="eqChoices"></div>
-        <div class="hint" id="eqWhy" style="display:none"></div>
-        <button class="btn" id="eqNext" style="display:none">다음 →</button>
+        <span class="badge">패턴 훔치기</span>
+        <p class="meta" id="pcProg"></p>
+        <div class="card patcard" id="patCard" onclick="flipPat()">
+          <p class="kr" id="patFront" style="font-size:16px; line-height:1.7;"></p>
+          <p class="en" id="patBack" style="display:none; font-size:16.5px; line-height:1.8; color:var(--gold); margin-top:14px;"></p>
+          <p class="meta" id="patHint" style="margin-top:14px;">👆 탭하면 영어 패턴 보기</p>
+        </div>
+        <button class="btn" id="patNext" style="display:none">다음 패턴 →</button>
       </div>
     </section>
     <section id="essay-done" hidden>
       <div class="card" style="text-align:center">
         <h2>에세이 완료 📖</h2>
-        <div class="bandbig" id="edScore"></div>
+        <div class="bandbig" id="edScore" style="font-size:22px;">복습 완료 ✓</div>
         <p class="kr" id="edMsg"></p>
         <div id="edRecap" style="text-align:left"></div>
         <button class="btn" id="edNext">다음 에세이 읽기</button>
-        <button class="btn ghost small" id="edRetry" style="display:none" onclick="startEssayQuiz()">🔁 퀴즈 다시 풀기</button>
+        <button class="btn ghost small" id="edRetry" style="display:none" onclick="startPatternReview()">🔁 패턴 다시 보기</button>
         <button class="btn ghost small" onclick="showTab('tab-essay'); essayHome()">목록으로</button>
       </div>
     </section>
@@ -688,6 +692,44 @@ GRA: [
 {q: "다음 두 문장을 가장 자연스럽게 결합한 것은?\n\"The internet provides vast information. People must learn to evaluate sources critically.\"", choices: ["The internet provides vast information, people must learn to evaluate sources critically.", "The internet provides vast information, however people must learn to evaluate sources critically.", "While the internet provides vast information, people must learn to evaluate sources critically.", "Providing vast information, people must learn to evaluate sources critically."], answer: 2, why: "양보 접속사 while로 자연스럽게 연결돼. (콤마 스플라이스 2개, dangling 분사는 오류.)"}
 ]};
 
+const PATTERNS = [
+[
+{ko:"'지역사회 무급 봉사가 고등학생에게 의무여야 한다'를 바꿔쓰면?", en:"unpaid work in the local community should be mandatory for secondary school students"},
+{ko:"'시민의식을 함양하다'를 고급 연어로", en:"foster a lasting sense of civic duty"},
+{ko:"'~보다 훨씬 크다'를 한 단어로", en:"far outweigh"},
+{ko:"상대 의견('학업 자격도 중요하다')을 인정하면서 내 주장으로 꺾을 때", en:"While academic qualifications remain important,"},
+{ko:"반대 입장을 한 문장 안에 처리하는 양보절", en:"Although critics may argue that it adds to students' already heavy workloads,"}
+],
+[
+{ko:"'범죄의 근본 원인을 다룬다'를 자연스러운 연어로", en:"tackling the root causes of crime"},
+{ko:"'감옥에 있다'를 관용 표현으로", en:"behind bars"},
+{ko:"상대 견해를 인정하되 같은 문장에서 바로 꺾기", en:"while longer prison sentences may satisfy the public demand for tough justice,"},
+{ko:"'의무 형량'이라는 정확한 법률 용어", en:"mandatory sentences"},
+{ko:"첫 번째 견해를 본론 첫 문장에 선언하기", en:"Those who favour longer sentences claim that harsh punishment deters potential offenders."}
+],
+[
+{ko:"'장점이 단점을 능가하는가'라는 질문에 직접 답하는 표현", en:"outweigh the disadvantages"},
+{ko:"'인구 보너스'라는 정확한 경제 용어", en:"demographic dividend"},
+{ko:"단점을 인정하며 문단을 전환할 때", en:"Admittedly,"},
+{ko:"결론에서 양쪽 논점을 한 문장에 담기", en:"while an abundance of young adults presents challenges such as job competition,"},
+{ko:"'~로 이어지다'를 분사구문으로", en:"leading to youth unemployment"}
+],
+[
+{ko:"'남획·과도한 이용'이라는 정확한 주제 어휘", en:"overexploitation"},
+{ko:"원인 문단에서 해결책 문단으로 넘어가는 다리", en:"To reverse this trend,"},
+{ko:"'고갈시키다'를 격식 있는 동사로", en:"depleted"},
+{ko:"해결책의 효과를 한 문장에 압축하기", en:"thereby destroying the market that drives poaching."},
+{ko:"'정치적 의지'라는 자연스러운 연어", en:"political will"}
+],
+[
+{ko:"'Happiness is considered very important'를 바꿔쓰면?", en:"is widely regarded as one of the most important goals in life"},
+{ko:"'쾌락 적응'이라는 심리학 용어", en:"hedonic adaptation"},
+{ko:"'가리다, 압도하다'를 고급 동사로", en:"overshadow"},
+{ko:"동명사 3개 병렬로 문장에 리듬 만들기", en:"nurturing relationships, safeguarding health and pursuing meaningful goals"},
+{ko:"두 번째 질문(행복의 요소)으로 전환할 때", en:"Despite this elusiveness,"}
+]
+];
+
 const CRIT_INFO = {
   TR: {name:"Task Response", desc:"문제 파악 · 입장 일관성"},
   CC: {name:"Coherence & Cohesion", desc:"문단 구조 · 연결어"},
@@ -889,12 +931,12 @@ function essayHome(){
   ["essay-list","essay-read","essay-quiz","essay-done"].forEach(id=>$(id).hidden=true);
   $("essay-list").hidden=false;
   $("essayCards").innerHTML = ESSAYS.map((e,i)=>{
-    const done = DB.essays[i];
+    const st = essayStatus(i);
     return `<div class="card essay-card" onclick="openEssay(${i})">
       <span class="badge">${esc(e.topic)}</span>
-      <h2 style="font-size:17px">${i+1}. ${esc(e.title)} ${done!=null?"✅":""}</h2>
-      <p class="meta">${e.words}단어 · 주석 ${e.segments.filter(s=>s.k).length}개 · 퀴즈 2개</p>
-      <p class="meta">${done!=null?("퀴즈 기록: "+done+"/2"):"아직 안 읽음"}</p>
+      <h2 style="font-size:17px">${i+1}. ${esc(e.title)} ${st==="reviewed"?"✅":st?"📖":""}</h2>
+      <p class="meta">${e.words}단어 · 주석 ${e.segments.filter(s=>s.k).length}개 · 패턴 5장</p>
+      <p class="meta">${st==="reviewed"?"복습 완료":st?"읽음":"아직 안 읽음"}</p>
     </div>`;
   }).join("");
 }
@@ -925,48 +967,54 @@ function tapAnn(el){
   $("noteText").textContent=el.dataset.note;
   $("notePanel").hidden=false;
 }
-function startEssayQuiz(){
-  const e=ESSAYS[state.essayIdx];
-  state.eq={idx:0, score:0};
+function essayStatus(i){
+  const d=(DB.essays||{})[i];
+  if(d && typeof d==="object") return d.reviewed ? "reviewed" : "read";
+  return d!=null ? "read" : null;
+}
+function migrateEssays(){
+  let changed=false;
+  Object.keys(DB.essays||{}).forEach(k=>{
+    if(typeof DB.essays[k]==="number"){ DB.essays[k]={read:1}; changed=true; }
+  });
+  if(changed) saveDB(DB);
+}
+function startPatternReview(){
+  const cards=PATTERNS[state.essayIdx];
+  state.pat={idx:0, flipped:false};
   $("essay-read").hidden=true; $("essay-done").hidden=true; $("essay-quiz").hidden=false;
-  renderEq();
+  renderPat();
   window.scrollTo({top:0});
 }
-function renderEq(){
-  const e=ESSAYS[state.essayIdx], q=e.quiz[state.eq.idx];
-  $("eqProg").textContent="문제 "+(state.eq.idx+1)+" / "+e.quiz.length+" · 맞춘 "+state.eq.score+"개";
-  $("eqQ").textContent=q.q;
-  $("eqWhy").style.display="none"; $("eqNext").style.display="none";
-  $("eqChoices").innerHTML=q.choices.map((c,i)=>
-    `<button class="choice" onclick="eqAnswer(${i})">${esc(c)}</button>`).join("");
+function renderPat(){
+  const cards=PATTERNS[state.essayIdx], p=state.pat, c=cards[p.idx];
+  $("pcProg").textContent="패턴 "+(p.idx+1)+" / "+cards.length+" · 한국어 보고 영어 떠올려봐";
+  $("patFront").textContent=c.ko;
+  $("patBack").textContent=c.en;
+  $("patBack").style.display="none";
+  $("patHint").style.display="";
+  $("patNext").style.display="none";
+  p.flipped=false;
 }
-function eqAnswer(i){
-  const e=ESSAYS[state.essayIdx], q=e.quiz[state.eq.idx];
-  const btns=document.querySelectorAll("#eqChoices .choice");
-  btns.forEach(b=>b.disabled=true);
-  btns[q.answer].classList.add("correct");
-  if(i===q.answer) state.eq.score++; else btns[i].classList.add("wrong");
-  $("eqProg").textContent="문제 "+(state.eq.idx+1)+" / "+e.quiz.length+" · 맞춘 "+state.eq.score+"개";
-  $("eqWhy").innerHTML=(i===q.answer?"⭕ 정답! ":"❌ 땡! ")+esc(q.why);
-  $("eqWhy").style.display="";
-  $("eqNext").textContent = state.eq.idx===e.quiz.length-1 ? "결과 보기 →" : "다음 문제 →";
-  $("eqNext").style.display="";
+function flipPat(){
+  const p=state.pat; if(p.flipped) return; p.flipped=true;
+  $("patBack").style.display=""; $("patHint").style.display="none";
+  const cards=PATTERNS[state.essayIdx];
+  $("patNext").textContent = p.idx===cards.length-1 ? "복습 완료 →" : "다음 패턴 →";
+  $("patNext").style.display="";
 }
-function nextEq(){
-  const e=ESSAYS[state.essayIdx];
-  if(state.eq.idx<e.quiz.length-1){ state.eq.idx++; renderEq(); return; }
-  const prev=DB.essays[state.essayIdx];
-  if(prev==null||state.eq.score>prev) DB.essays[state.essayIdx]=state.eq.score;
-  markDay();
-  DB.daily.essay=true; saveDB(DB);
+function nextPat(){
+  const cards=PATTERNS[state.essayIdx], p=state.pat;
+  if(p.idx<cards.length-1){ p.idx++; renderPat(); return; }
+  DB.essays[state.essayIdx]={read:1, reviewed:1};
+  saveDB(DB); markDay();
+  if(DB.daily){ DB.daily.essay=true; saveDB(DB); }
   $("essay-quiz").hidden=true; $("essay-done").hidden=false;
-  $("edScore").textContent=state.eq.score+" / "+e.quiz.length;
-  $("edMsg").textContent = state.eq.score===e.quiz.length
-    ? "완벽해! 이 에세이의 패턴을 네 것으로 만들었어."
-    : "좋아. 틀린 문제는 해설을 다시 읽고 넘어가.";
-  $("edRetry").style.display = state.eq.score<e.quiz.length ? "" : "none";
-  $("edRecap").innerHTML=`<div class="recap-box"><b>📝 이 에세이에서 훔쳐갈 패턴 3가지</b>${e.recap.map(r=>`<div class="recap-item"><b>📌 ${esc(r.p)}</b><p class="rx">“${esc(r.x)}”</p><p class="rh">✍️ ${esc(r.how)}</p></div>`).join("")}</div>`;
-  const nxt=ESSAYS.findIndex((_,i)=>DB.essays[i]==null);
+  $("edScore").textContent="복습 완료 ✓";
+  $("edMsg").textContent="5개 패턴을 훔쳤어. 실전에서 꺼내 쓸 수 있게 가끔 다시 뒤집어봐.";
+  $("edRetry").style.display="";
+  $("edRecap").innerHTML=`<div class="recap-box"><b>📝 이 에세이에서 훔쳐갈 패턴 3가지</b>${ESSAYS[state.essayIdx].recap.map(r=>`<div class="recap-item"><b>📌 ${esc(r.p)}</b><p class="rx">\u201c${esc(r.x)}\u201d</p><p class="rh">✍️ ${esc(r.how)}</p></div>`).join("")}</div>`;
+  const nxt=ESSAYS.findIndex((_,i)=>essayStatus(i)!=="reviewed");
   $("edNext").textContent = nxt>=0 ? `다음 에세이 읽기 (${nxt+1}번) →` : "목록으로 돌아가기";
   $("edNext").onclick = ()=>{ if(nxt>=0) openEssay(nxt); else essayHome(); };
 }
@@ -1040,19 +1088,20 @@ function renderStats(){
   $("statWeak").style.display="";
   $("statWeak").innerHTML="💡 지금 가장 약한 기준은 <b>"+w+"</b>"+(missN?(" · ❌ 틀린 문제 "+missN+"개가 쌓여 있어. 드릴 탭에서 정복해봐."):" . 홈에서 약점 드릴 바로 풀어봐.");
   $("statEssayList").innerHTML=ESSAYS.map((e,i)=>{
-    const s=(DB.essays||{})[i];
-    return `<div class="stat"><span>${i+1}. ${esc(e.title)}</span><b>${s!=null?s+"/2 ✅":"—"}</b></div>`;
+    const st=essayStatus(i);
+    return `<div class="stat"><span>${i+1}. ${esc(e.title)}</span><b>${st==="reviewed"?"복습 ✓":st?"읽음":"—"}</b></div>`;
   }).join("");
 }
 
 /* ---------- 초기화 ---------- */
 function init(){
+  migrateEssays();
   document.querySelectorAll(".tabs button").forEach(b=>
     b.addEventListener("click", ()=>showTab(b.dataset.tab)));
   $("drillRetry").addEventListener("click", ()=>startDrill(state.drill?state.drill.k:"TR"));
   $("drillNext").addEventListener("click", drillNext);
-  $("btnErQuiz").addEventListener("click", startEssayQuiz);
-  $("eqNext").addEventListener("click", nextEq);
+  $("btnErQuiz").addEventListener("click", startPatternReview);
+  $("patNext").addEventListener("click", nextPat);
   $("btnAddResv").addEventListener("click", addResv);
   $("btnNotif").addEventListener("click", askNotif);
   $("dueLater").addEventListener("click", ()=>{ $("dueBanner").hidden=true; });
