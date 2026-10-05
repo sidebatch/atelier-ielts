@@ -148,9 +148,8 @@
       </div>
       <div class="card">
         <h3>☀️ 오늘의 15분 루틴</h3>
-        <p class="kr">① 모범 에세이 1개 읽기 (10분) → ② 약점 드릴 1세트 (5분)</p>
-        <button class="btn" onclick="showTab('tab-essay')">에세이 읽으러 가기</button>
-        <button class="btn ghost" onclick="goWeakDrill()">내 약점 드릴 풀기</button>
+        <div id="routineList"></div>
+        <p class="hint" id="routineMsg" style="display:none"></p>
       </div>
       <div class="card">
         <h3>4개 평가기준 (각 25%)</h3>
@@ -367,6 +366,7 @@
       <div class="card"><div class="num" id="statEssays">0</div><div class="lbl">읽은 에세이</div></div>
       <div class="card"><div class="num" id="statDrills">0</div><div class="lbl">푼 드릴 문제</div></div>
     </div>
+    <div class="hint" id="statStreakMsg" style="margin:-4px 2px 14px"></div>
     <div class="card">
       <h3>🎯 기준별 드릴 최고 기록</h3>
       <div id="statDrillBest"><p class="meta">아직 드릴 기록이 없어.</p></div>
@@ -707,6 +707,7 @@ let DB = loadDB();
 function markDay(){
   const d = new Date().toISOString().slice(0,10);
   if(!DB.days.includes(d)){ DB.days.push(d); saveDB(DB); }
+  if(!DB.daily || DB.daily.date!==d){ DB.daily={date:d, essay:false, drill:false}; saveDB(DB); }
 }
 
 // ---------- 공통 ----------
@@ -736,12 +737,34 @@ function weakestCrit(){
 }
 function goWeakDrill(){ showTab("tab-drill"); startDrill(weakestCrit()); }
 function renderHome(){
-  const w = weakestCrit();
+  renderRoutine();
   $("homeCrit").innerHTML = Object.keys(CRIT_INFO).map(k=>{
     const best = DB.drills[k];
     const mark = best==null ? "미시작" : best+"/"+DRILLS[k].length+" 맞음";
     return `<div class="stat"><span><b style="color:var(--gold)">${k}</b> · ${CRIT_INFO[k].name}<br><span class="meta">${CRIT_INFO[k].desc}</span></span><b>${mark}</b></div>`;
   }).join("");
+}
+/* 오늘의 15분 루틴: 구체적 다음 행동 + 완료 체크 + 연속일 동기부여 */
+function nextEssayIdx(){ return ESSAYS.findIndex((_,i)=>(DB.essays||{})[i]==null); }
+function goEssay(i){ showTab("tab-essay"); openEssay(i); }
+function goEssayList(){ showTab("tab-essay"); essayHome(); }
+function renderRoutine(){
+  markDay();
+  const d=DB.daily, w=weakestCrit(), ni=nextEssayIdx();
+  const rows=[
+    {done:d.essay, fn: ni>=0?`goEssay(${ni})`:"goEssayList()",
+     label:`📖 에세이 1개 읽기 (10분)<br><span class="meta">${ni>=0?("#"+(ni+1)+" · "+esc(ESSAYS[ni].title)):"5개 전부 읽음! 다시 읽어도 좋아"}</span>`},
+    {done:d.drill, fn:"goWeakDrill()",
+     label:`🎯 약점 드릴 1세트 (5분)<br><span class="meta">지금 가장 약한 기준: ${w} · ${CRIT_INFO[w].name}</span>`}
+  ];
+  $("routineList").innerHTML=rows.map(r=>
+    `<div class="stat"><span>${r.done?"✅":"⬜"} ${r.label}</span><button class="btn ghost small" onclick="${r.fn}">${r.done?"다시 하기":"시작 →"}</button></div>`
+  ).join("");
+  const streak=calcStreak(DB.days||[]);
+  const m=$("routineMsg"); m.style.display="";
+  if(d.essay&&d.drill) m.innerHTML=`🎉 <b>오늘 루틴 완료!</b> 🔥 연속 ${streak}일째 달리는 중 — 내일도 와.`;
+  else if(streak>0) m.innerHTML=`🔥 연속 ${streak}일째! 오늘 루틴을 마치면 <b>${streak+1}일</b>이 돼.`;
+  else m.innerHTML=`첫 날이야. 15분만 투자해봐 — 작은 게 쌓여.`;
 }
 
 // ---------- 드릴 ----------
@@ -798,8 +821,9 @@ function drillNext(){
     $("drillMsg").textContent = rate===1 ? "완벽해! 이 기준은 이제 네 무기야." :
       rate>=0.6 ? "좋아. 틀린 건 해설 다시 보고 넘어가." : "해설을 천천히 다시 읽고 한 번 더 풀어봐.";
     if(d.correct>(DB.drills[d.k]||-1)){ DB.drills[d.k]=d.correct; }
-    DB.drillSolved=(DB.drillSolved||0)+d.qs.length; saveDB(DB);
+    DB.drillSolved=(DB.drillSolved||0)+d.qs.length;
     markDay();
+    DB.daily.drill=true; saveDB(DB);
     state.drill.k2=d.k;
   }
 }
@@ -880,7 +904,8 @@ function nextEq(){
   if(state.eq.idx<e.quiz.length-1){ state.eq.idx++; renderEq(); return; }
   const prev=DB.essays[state.essayIdx];
   if(prev==null||state.eq.score>prev) DB.essays[state.essayIdx]=state.eq.score;
-  saveDB(DB); markDay();
+  markDay();
+  DB.daily.essay=true; saveDB(DB);
   $("essay-quiz").hidden=true; $("essay-done").hidden=false;
   $("edScore").textContent=state.eq.score+" / "+e.quiz.length;
   $("edMsg").textContent = state.eq.score===e.quiz.length
@@ -942,8 +967,14 @@ function calcStreak(days){
 }
 function renderStats(){
   const days=DB.days||[];
+  const streak=calcStreak(days);
   $("statDays").textContent=days.length;
-  $("statStreak").textContent=calcStreak(days);
+  $("statStreak").textContent=streak;
+  $("statStreakMsg").textContent =
+    streak>=7 ? "🏆 7일 연속 돌파! 꾸준함이 밴드 7을 만든다." :
+    streak>=3 ? `🔥 ${streak}일 연속! 습관이 붙고 있어.` :
+    streak===1 ? "👍 연속 1일! 내일도 15분만." :
+    (days.length ? "오늘 15분 루틴을 마치면 연속 기록이 다시 시작돼." : "아직 기록이 없어. 홈의 15분 루틴부터 시작해봐!");
   $("statEssays").textContent=Object.keys(DB.essays||{}).length+" / "+ESSAYS.length;
   $("statDrills").textContent=DB.drillSolved||0;
   $("statDrillBest").innerHTML=Object.keys(DRILLS).map(k=>{
