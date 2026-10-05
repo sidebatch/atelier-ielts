@@ -123,6 +123,11 @@
   .recap-item .rh{font-size:14px; margin:0; color:var(--muted); line-height:1.6;}
   .essay-card{cursor:pointer;}
   .essay-card:active{border-color:var(--gold-dim);}
+  /* 360px대 좁은 폰: 탭 라벨이 버튼 밖으로 삐져나오지 않도록 */
+  @media (max-width:380px){
+    .tabs{gap:4px;}
+    .tabs button{font-size:12px; padding:12px 0;}
+  }
 </style>
 </head>
 <body>
